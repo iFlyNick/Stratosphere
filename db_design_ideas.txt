@@ -1,0 +1,95 @@
+Tables are grouped by respective application areas. Areas are defined but not limited to the following:
+
+- Services
+- Maintenance Mode
+- CloudAMQP Queues
+- Service Health Reports
+- Alerting
+
+Services
+
+	###
+		holds information related to services and their underlying type that they operate as; Docker containers, IIS Applications, or Windows Services.
+		additionally stores where those services operate for remote management.
+	###
+
+	Tables:
+
+	- Service
+	- ServiceType
+	- Asset
+	- ServiceAsset (1+ assets that a service operates on)
+	- ServiceQueue (1+ queues that a service ties to)
+	- ServiceAlert (1+ alert profile tracking for alerting on issues)
+
+
+Maintenance Mode:
+
+	###
+		uses service templates to group services into like minded maintenance mode requests.
+		complexity arises when a service spans multiple functional areas, as well as sub-areas of individual areas.
+
+		The ability to toggle individual services ad hoc will need to be supported, in addition to overlapping maintenance mode templates that are active at the same time.
+		the database won't be directly responsible for how the application manages services in maintenance mode, but the table design and audit logging will need to be supported.
+
+		must support historical/audit information.
+	###
+
+	Tables:
+
+	- MaintenanceTemplate (base template for a given maintenance mode request)
+	- MaintenanceTemplateDetail (1+ services that are part of this template)
+	- MaintenanceHistory (can reference template or be ad hoc)
+
+
+CloudAMQP Queues:
+
+	###
+		intent to help manage queue alarms and general queue message counts over a time period. expectation will be to use the amqp api to pull queue message counts on a given interval
+		and store into the database for historical snapshot of potential backups. 
+
+		must support historical/audit information.
+
+		for additional info, the <instance url>/api/queues endpoint can access all queues for a given instance, but the api.cloudamqp.com/api/alarms must be used for alarms as they dont apply to instances.
+		the instance uses user/pass, but the alarms api uses only an api key set as the password with no username.
+	###
+
+	Tables:
+
+	- VirtualHost
+	- Queue
+	- QueueSnapshot
+	- Alarm
+
+
+Service Health Reports:
+
+	###
+		responsible for storing historical information from self reported health checks by the services. actions will be taken based on the health check results based on defined intervals as well as
+		supporting the alerting functionality.
+
+		must support historical information.
+	###
+
+	Tables:
+
+	- ServiceHealthHistory (summary of reported health check by service)
+	- ServiceHealthHistoryDetail (additional detailed information reported by the health check, ie error message, etc.)
+
+
+Alerting:
+
+	###
+		information related to how and when alerts are sent out. the alerting service shouldn't be responsible for when to alert, but only how to alert. the service health service will invoke the alerting
+		service when it's needed.
+
+		alerting can be done via email, sms, and microsoft teams. potential long term could be to support multiple teams and channels within teams, or automated ticket creation in a ticketing system.
+
+		must support historical/audit information.
+	###
+
+	Tables:
+
+	- AlertHistory
+	- AlertProfile (ties to a service)
+	- AlertProfileDetail (1+ contacts to alert and how)
