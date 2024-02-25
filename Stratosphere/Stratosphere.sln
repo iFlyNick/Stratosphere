@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34607.119
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stratosphere", "Stratosphere\Stratosphere.csproj", "{594BA619-936B-4510-B3F2-B2047EFBB3F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stratosphere", "Stratosphere.csproj", "{594BA619-936B-4510-B3F2-B2047EFBB3F9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stratosphere.MaintenanceMode.WorkerService", "Stratosphere.MaintenanceMode.WorkerService\Stratosphere.MaintenanceMode.WorkerService.csproj", "{B6B31748-E5F3-4FCC-B1F5-FFA301E82975}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stratosphere.MaintenanceMode.WorkerService", "..\Stratosphere.MaintenanceMode.WorkerService\Stratosphere.MaintenanceMode.WorkerService.csproj", "{B6B31748-E5F3-4FCC-B1F5-FFA301E82975}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stratosphere.Tests", "Stratosphere.Tests\Stratosphere.Tests.csproj", "{462FC2EA-45E2-4D28-B0D8-5C64723513B2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stratosphere.Tests", "..\Stratosphere.Tests\Stratosphere.Tests.csproj", "{462FC2EA-45E2-4D28-B0D8-5C64723513B2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
