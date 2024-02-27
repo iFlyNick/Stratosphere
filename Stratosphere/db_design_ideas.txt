@@ -24,10 +24,13 @@ Services
 
 	- Service (base service information)
 	- ServiceType (Docker, IIS, Windows Service)
-	- Asset (generic asset information, ie server, vm, etc. that a service operates on))
+	- Asset (generic asset information that a service operates on)
+	- AssetType (server, vm, etc.)
 	- ServiceAsset (1+ assets that a service operates on)
 	- ServiceQueue (1+ queues that a service ties to)
 	- ServiceAlert (1+ alert profile tracking for alerting on issues)
+	- Environment (helps ensure services are grouped by environment on templates, ie dev, qa, prod)
+	- ServiceEnvironmentDetail (holds info by environment how a service qualfiies for threshold metrics around alerts/restarts/etc)
 
 
 Maintenance Mode:
