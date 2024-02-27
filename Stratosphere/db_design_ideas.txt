@@ -6,6 +6,13 @@ Tables are grouped by respective application areas. Areas are defined but not li
 - Service Health Reports
 - Alerting
 
+All tables will have the following columns:
+
+	- CreatedBy
+	- CreatedDate
+	- ModifiedBy
+	- ModifiedDate
+
 Services
 
 	###
@@ -15,9 +22,9 @@ Services
 
 	Tables:
 
-	- Service
-	- ServiceType
-	- Asset
+	- Service (base service information)
+	- ServiceType (Docker, IIS, Windows Service)
+	- Asset (generic asset information, ie server, vm, etc. that a service operates on))
 	- ServiceAsset (1+ assets that a service operates on)
 	- ServiceQueue (1+ queues that a service ties to)
 	- ServiceAlert (1+ alert profile tracking for alerting on issues)
@@ -56,10 +63,10 @@ CloudAMQP Queues:
 
 	Tables:
 
-	- VirtualHost
-	- Queue
-	- QueueSnapshot
-	- Alarm
+	- VirtualHost (local reference for cloudamqp vhosts)
+	- Queue (local reference for cloudamqp queues)
+	- QueueSnapshot (historical snapshot of queue message counts)
+	- Alarm (local reference for cloudamqp alarms)
 
 
 Service Health Reports:
@@ -90,6 +97,6 @@ Alerting:
 
 	Tables:
 
-	- AlertHistory
+	- AlertHistory (summary of alerts sent out)
 	- AlertProfile (ties to a service)
 	- AlertProfileDetail (1+ contacts to alert and how)
