@@ -14,7 +14,7 @@ create table if not exists Stratosphere.Queue (
 	CreatedDate timestamp not null,
 	ModifiedBy varchar(255) null,
 	ModifiedDate timestamp null,
-	primary key (QueueId, VirtualHostId, EnvironmentId),
+	primary key (QueueId),
 	foreign key (VirtualHostId) references Stratosphere.VirtualHost(VirtualHostId),
 	foreign key (EnvironmentId) references Stratosphere.Environment(EnvironmentId)
 );

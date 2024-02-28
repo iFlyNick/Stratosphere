@@ -7,6 +7,7 @@
 */
 
 create table [Stratosphere].[Alarm] (
+	[AlarmId] int not null,
 	[CreatedBy] varchar(255) not null,
 	[CreatedDate] datetime2(7) not null,
 	[ModifiedBy] varchar(255) null,

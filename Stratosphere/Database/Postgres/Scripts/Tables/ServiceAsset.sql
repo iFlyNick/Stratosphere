@@ -3,11 +3,19 @@
 
 	description: 
 	relates to the service table and is reponsible for tracking what assets a given service operates on
+
+	notes:
+	defining environmentid here is beneficial as this doesn't box one asset into one environment.
+	defining an override name here allows for an individual service to not fully depend on it's core name and 
+	be different when deployed for any given reason. for example a docker service could have a different name
+	on a given asset compared to it's core name.
 */
 
 create table if not exists Stratosphere.ServiceAsset (
-	ServiceId nvarchar(255) not null,
-	AssetId nvarchar(255) not null,
+	ServiceId int not null,
+	AssetId int not null,
+	EnvironmentId int not null, 
+	OverrideName varchar(255) null,
 	CreatedBy varchar(255) not null,
 	CreatedDate timestamp not null,
 	ModifiedBy varchar(255) null,
@@ -15,4 +23,5 @@ create table if not exists Stratosphere.ServiceAsset (
 	primary key (ServiceId, AssetId),
 	foreign key (ServiceId) references Stratosphere.Service(ServiceId),
 	foreign key (AssetId) references Stratosphere.Asset(AssetId),
+	foreign key (EnvironmentId) references Stratosphere.Environment(EnvironmentId)
 );

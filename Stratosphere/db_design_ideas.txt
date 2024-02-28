@@ -49,7 +49,8 @@ Maintenance Mode:
 
 	- MaintenanceTemplate (base template for a given maintenance mode request)
 	- MaintenanceTemplateDetail (1+ services that are part of this template)
-	- MaintenanceHistory (can reference template or be ad hoc)
+	- MaintenanceRequest (parent table for an individual maintenance mode request)
+	- MaintenanceRequestDetail (1+ services that are part of this request)
 
 
 CloudAMQP Queues:
@@ -83,9 +84,9 @@ Service Health Reports:
 
 	Tables:
 
-	- ServiceHealthHistory (summary of reported health check by service)
-	- ServiceHealthHistoryDetail (additional detailed information reported by the health check, ie error message, etc.)
-
+	- ServiceHealthReport (summary of reported health check by service)
+	- ServiceHealthReportDetail (additional detailed information reported by the health check, ie error message, etc.)
+	- HealthStatusType (healthy, unhealthy, etc.)
 
 Alerting:
 
@@ -103,3 +104,5 @@ Alerting:
 	- AlertHistory (summary of alerts sent out)
 	- AlertProfile (ties to a service)
 	- AlertProfileDetail (1+ contacts to alert and how)
+	- Contact (contact information for alerting)
+	- ContactType (email, sms, teams, etc.)

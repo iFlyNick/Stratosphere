@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Database\Postgres\Scripts\Seeds\" />
-    <Folder Include="Database\Postgres\Scripts\Tables\" />
     <Folder Include="Data\Postgres\Repository\" />
     <Folder Include="Data\SqlServer\Repository\" />
   </ItemGroup>
