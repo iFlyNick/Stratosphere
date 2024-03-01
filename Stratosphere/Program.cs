@@ -1,7 +1,16 @@
+using Stratosphere.Data.Postgres.Context;
+using Stratosphere.Data.Postgres.Repository;
+using Stratosphere.Database;
+using Stratosphere.Services.Database;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+builder.Services.AddSingleton<IPostgresContext, PostgresContext>();
+builder.Services.AddSingleton<IPostgresRepository, PostgresRepository>();
+builder.Services.AddSingleton<IDatabaseService, DatabaseService>();
 
 var app = builder.Build();
 

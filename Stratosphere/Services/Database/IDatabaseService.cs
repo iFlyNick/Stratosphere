@@ -2,4 +2,6 @@
 
 public interface IDatabaseService
 {
+    Task CreateSchema(CancellationToken cancellationToken = default);
+    Task CreateDatabase(CancellationToken cancellationToken = default);
 }
