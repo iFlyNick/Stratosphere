@@ -20,8 +20,8 @@ public class IndexModel : PageModel
 
         try
         {
-            await _dbService.CreateSchema(cancellationToken);
-            await _dbService.CreateDatabase(cancellationToken);
+            //await _dbService.CreateSchema(cancellationToken);
+            //await _dbService.CreateDatabase(cancellationToken);
         } 
         catch (Exception ex)
         {
