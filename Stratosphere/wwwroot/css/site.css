@@ -1,5 +1,7 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
+    position: relative;
+    height: 100%;
 }
 
 @media (min-width: 768px) {
@@ -8,61 +10,124 @@ html {
   }
 }
 
+:root {
+    --main-header-height: 60px;
+    --main-sidebar-width: 275px;
+    --user-container-height: 80px;
+    --header-searchbar-width: 400px;
+}
+
+[data-theme='dark'] {
+    --main-header-color: #181a1b;
+    --main-body-color: #212425;
+    --main-branding-color: #25282a;
+    --main-sidebar-color: #25282a;
+    --logo-fill: #d1cdc7;
+    --main-color-pop: #a73415;
+    --main-text-color: #d1cdc7;
+}
+
+[data-theme='light'] {
+    --main-header-color: #ffffff;
+    --main-body-color: #efefef;
+    --main-branding-color: #e8e8e8;
+    --main-sidebar-color: #e8e8e8;
+    --logo-fill: #454545;
+    --main-color-pop: #e76846;
+    --main-text-color: #454545;
+}
+
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  height: 100%;
-}
-
-body {
-    margin-bottom: 0;
-    height: 100%;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 .grid-container {
-    height: 100%;
     display: grid;
-    grid-template-columns: 275px 1fr;
-    grid-template-rows: 60px 1fr;
+    grid-template-columns: var(--main-sidebar-width) 1fr;
+    grid-template-rows: var(--main-header-height) 1fr;
     grid-template-areas:
         "branding header"
         "sidebar main";
 }
 
-.branding {
-    background-color: orange;
+.brandingLogo {
+    background-color: var(--main-branding-color);
+    color: var(--logo-fill);
     grid-area: branding;
 }
 
+    .brandingLogo h2 {
+        font-size: 36px;
+    }
+
+input {
+    outline: none;
+}
+
 .header {
-    background-color: orange;
+    background-color: var(--main-header-color);
     grid-area: header;
 }
 
+    .header #headerSearchContainer {
+        width: var(--header-searchbar-width);
+    }
+
+        .header #headerSearchContainer .headerSearchInputContainer {
+            color: var(--main-text-color);
+            background-color: var(--main-body-color);
+            border-top-left-radius: .5rem;
+            border-bottom-left-radius: .5rem;
+        }
+
+            .header #headerSearchContainer .headerSearchInputContainer .headerSearchInput {
+                border: none;
+                background-color: var(--main-body-color);
+            }
+
+        .header #headerSearchContainer .searchRoundedEnd {
+            border-top-right-radius: .5rem;
+            border-bottom-right-radius: .5rem;
+            background-color: var(--main-color-pop);
+            color: var(--main-text-color);
+            font-size: 1.25rem;
+            cursor: pointer;
+        }
+
 .sidebar {
-    background-color: yellow;
+    background-color: var(--main-sidebar-color);
+    color: var(--logo-fill) !important;
     grid-area: sidebar;
 }
 
+    .sidebar .sidebarUserContainer {
+        background-color: var(--main-header-color);
+        height: var(--user-container-height);
+    }
+
+    .sidebar .sidebarUserContainer #sidebarUser {
+        font-size: 24px;
+    }
+
+#darkModeToggle {
+    cursor: pointer;
+}
+
 .main {
-    background-color: blue;
+    background-color: var(--main-body-color);
     grid-area: main;
+    color: var(--logo-fill) !important;
 }
 
-.content {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/*bootstrap helpers*/
+.h-60 {
+    height: 60%;
 }
 
-.content-vert {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.h-40 {
+    height: 40%;
+}
+
+.w-98 {
+    width: 98%;
 }
