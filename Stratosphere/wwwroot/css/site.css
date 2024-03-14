@@ -60,10 +60,6 @@ html {
         font-size: 36px;
     }
 
-input {
-    outline: none;
-}
-
 .header {
     background-color: var(--main-header-color);
     grid-area: header;
@@ -75,14 +71,19 @@ input {
 
         .header #headerSearchContainer .headerSearchInputContainer {
             color: var(--main-text-color);
-            background-color: var(--main-body-color);
+            background-color: var(--main-sidebar-color);
             border-top-left-radius: .5rem;
             border-bottom-left-radius: .5rem;
         }
 
+            .header #headerSearchContainer .headerSearchInputContainer:focus-within {
+                outline: solid 2px var(--main-color-pop);
+            }
+
             .header #headerSearchContainer .headerSearchInputContainer .headerSearchInput {
                 border: none;
-                background-color: var(--main-body-color);
+                background-color: var(--main-sidebar-color);
+                outline: none;
             }
 
         .header #headerSearchContainer .searchRoundedEnd {
@@ -109,14 +110,14 @@ input {
         font-size: 24px;
     }
 
-#darkModeToggle {
-    cursor: pointer;
-}
-
 .main {
     background-color: var(--main-body-color);
     grid-area: main;
     color: var(--logo-fill) !important;
+}
+
+.hoverPointer {
+    cursor: pointer;
 }
 
 /*bootstrap helpers*/

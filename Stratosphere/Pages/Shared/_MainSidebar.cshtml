@@ -1,4 +1,6 @@
 ﻿@{
+    var names = new List<string> { "Ben Dover", "Emerson Bigguns", "Mike Rotchburns", "Stacy Rect", "Wayne Kerr" };
+    var randInt = new Random().Next(0, names.Count);
 }
 
 @*no extra div to hold both as it's referenced in a div a level above this*@
@@ -6,27 +8,27 @@
 <div class="sidebarItemContainer pt-3 pb-3">
     <ul class="list-unstyled ps-3 m-0">
         <li class="pb-3 fs-5">
-            <a asp-page="/Index" class="text-decoration-none text-reset">
+            <a asp-page="/Index" class="text-decoration-none text-reset" tabindex="-1">
                 <span><i class="bi bi-speedometer2 pe-2"></i>Dashboard</span>
             </a>
         </li>
         <li class="pb-3 fs-5">
-            <a asp-page="/Administration/Index" class="text-decoration-none text-reset">
+            <a asp-page="/Administration/Index" class="text-decoration-none text-reset" tabindex="-1">
                 <span><i class="bi bi-gear-fill pe-2"></i>Administration</span>
             </a>
         </li>
         <li class="pb-3 fs-5">
-            <a asp-page="/Maintenance/Index" class="text-decoration-none text-reset">
+            <a asp-page="/Maintenance/Index" class="text-decoration-none text-reset" tabindex="-1">
                 <span><i class="bi bi-tools pe-2"></i>Maintenance</span>
             </a>
         </li>
         <li class="pb-3 fs-5">
-            <a asp-page="/Monitoring/Index" class="text-decoration-none text-reset">
+            <a asp-page="/Monitoring/Index" class="text-decoration-none text-reset" tabindex="-1">
                 <span><i class="bi bi-binoculars-fill pe-2"></i>Monitoring</span>
             </a>
         </li>
         <li class="pb-3 fs-5">
-            <a asp-page="/Queues/Index" class="text-decoration-none text-reset">
+            <a asp-page="/Queues/Index" class="text-decoration-none text-reset" tabindex="-1">
                 <span><i class="bi bi-stack pe-2"></i>Queues</span>
             </a>
         </li>
@@ -35,17 +37,17 @@
 
 <div class="sidebarUserContainer d-flex flex-column">
     <div id="sidebarUser" class="row w-100 m-0 p-0 h-60 text-center">
-        <span class="d-flex align-items-center justify-content-center h-100"><i class="bi bi-person-fill pe-2"></i>Ben Dover</span>
+        <span class="d-flex align-items-center justify-content-center h-100"><i class="bi bi-person-fill pe-2"></i>@names.ElementAt(randInt)</span>
     </div>
     <div id="sidebarUserButtons" class="row align-content-end w-100 m-0 p-0 h-40">
         <div id="userLogout" class="col-sm-6 mb-2">
-            <span class="d-flex justify-content-center"><i class="bi bi-box-arrow-left mx-1"></i>Logout</span>
+            <span class="d-flex justify-content-center hoverPointer"><i class="bi bi-box-arrow-left mx-1"></i>Logout</span>
         </div>
         <div id="userNotifications" class="col-sm-3 mb-2">
-            <span><i class="bi bi-bell-fill"></i></span>
+            <span class="hoverPointer"><i class="bi bi-bell-fill"></i></span>
         </div>
         <div id="darkModeToggle" class="col-sm-3 mb-2">
-            <span><i class="bi"></i></span>
+            <span class="hoverPointer"><i class="bi"></i></span>
         </div>
     </div>
 </div>
