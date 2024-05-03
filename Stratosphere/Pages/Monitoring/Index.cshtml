@@ -1,6 +1,24 @@
 ﻿@page
 @model Stratosphere.Pages.Monitoring.IndexModel
 @{
+    ViewData["Title"] = "Monitoring";
 }
 
-<h1>Monitoring</h1>
+<div id="mainHeaderNavLayer" class="d-flex w-100 justify-content-between align-items-center">
+    <div id="pageTitle" class="w-75 h-100">
+        <h1>Monitoring</h1>
+    </div>
+    <div id="pageMainButtons" class="d-flex w-25 h-100 justify-content-end align-items-center text-nowrap">
+
+    </div>
+</div>
+
+<div id="mainBodyLayer">
+    @foreach (var service in Model.Input.Services)
+    {
+        <div>
+            <h2>@service.ServiceName</h2>
+            <p>@service.ServiceDescription</p>
+        </div>
+    }
+</div>

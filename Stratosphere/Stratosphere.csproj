@@ -8,6 +8,15 @@
 
   <ItemGroup>
     <Folder Include="Database\Postgres\Scripts\Seeds\" />
+    <Folder Include="Pages\Administration\Environments\" />
+    <Folder Include="Pages\Administration\Contacts\" />
+    <Folder Include="Pages\Administration\Users\" />
+    <Folder Include="Pages\Administration\Services\" />
+    <Folder Include="Pages\Administration\Queues\" />
+    <Folder Include="Pages\Maintenance\Models\" />
+    <Folder Include="Pages\Maintenance\ViewModels\" />
+    <Folder Include="Pages\Maintenance\Partials\" />
+    <Folder Include="Pages\Monitoring\Partials\" />
   </ItemGroup>
 
   <ItemGroup>

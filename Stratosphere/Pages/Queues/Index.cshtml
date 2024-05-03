@@ -1,6 +1,83 @@
 ﻿@page
 @model Stratosphere.Pages.Queues.IndexModel
 @{
+    Layout = "_Layout";
+
+    var baseEnvironment = Model?.Input?.EnvironmentGroups?.FirstOrDefault()?.Name;
 }
 
-<h1>Queues</h1>
+<div class="pb-4">
+    <h1>Queues</h1>
+    <br/>
+    <p>The queue section is used to see the current status of the queues grouped by their parent environment. This can be useful to view current message count, number of consumers, and general queue setup definitions.</p>
+    <p>In a multi-environment setup, the tabs at the top can be used to quickly navigate between queue details related to their respective environments. In a single environment setup, no tabs will be displayed.</p>
+    <p>If you expect a queue to be present here but do not see it, please ensure it's added in the Administration - Queues page.</p>
+</div>
+
+<div class="mainCard">
+    @if (Model?.Input is null)
+    {
+        <h4>No data available.</h4>
+    } 
+    else
+    {
+        @if (Model.Input.EnvironmentGroups is null || Model.Input.EnvironmentGroups.Count <= 1)
+        {
+            @*don't show any tab groups*@
+        }
+        else
+        {
+            <div class="navTab d-flex">
+                @foreach (var environment in Model.Input.EnvironmentGroups)
+                {
+                    if (environment is null) 
+                        continue;
+
+                    var envId = $"{environment.Name}Tab";
+                    var activeEnv = (environment.Name?.Equals(baseEnvironment) ?? false) ? "active" : "";
+
+                    <div id="@envId" class="ps-3 pe-3">
+                        <div class="d-flex align-items-center hoverPointer">
+                            <span class="navTab @activeEnv">@environment.Name</span>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        <div class="mainDataTable">
+            <table id="queueTable" class="display">
+                <thead>
+                    <tr>
+                        <th>VHost</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>State</th>
+                        <th>Messages</th>
+                        <th>Unacknowledged Messages</th>
+                        <th>Consumers</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var queue in Model.Input.Queues)
+                    {
+                        <tr>
+                            <td>@queue.VHost</td>
+                            <td>@queue.Name</td>
+                            <td>@queue.Type</td>
+                            <td>@queue.State</td>
+                            <td>@queue.Messages</td>
+                            <td>@queue.UnacknowledgedMessages</td>
+                            <td>@queue.Consumers</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        let table = new DataTable('#queueTable');
+    </script>
+}
