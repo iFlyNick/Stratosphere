@@ -44,40 +44,46 @@
                 }
             </div>
         }
-        <div class="mainDataTable">
-            <table id="queueTable" class="display">
-                <thead>
-                    <tr>
-                        <th>VHost</th>
-                        <th>Name</th>
-                        <th>Type</th>
-                        <th>State</th>
-                        <th>Messages</th>
-                        <th>Unacknowledged Messages</th>
-                        <th>Consumers</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var queue in Model.Input.Queues)
-                    {
-                        <tr>
-                            <td>@queue.VHost</td>
-                            <td>@queue.Name</td>
-                            <td>@queue.Type</td>
-                            <td>@queue.State</td>
-                            <td>@queue.Messages</td>
-                            <td>@queue.UnacknowledgedMessages</td>
-                            <td>@queue.Consumers</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+
+        <div id="mainDataTable">
+
         </div>
     }
 </div>
 
 @section Scripts {
     <script>
-        let table = new DataTable('#queueTable');
+        $("#mainDataTable").empty().Grid({
+            search: true,
+            pagination: {
+                limit: 25
+            },
+            sort: true,
+            resizable: true,
+            columns: [
+                "VHost",
+                "Name",
+                "Type",
+                "State",
+                "Messages",
+                "Unacknowledged Messages",
+                "Consumers"
+            ],
+            data: () => {
+                var jsonData = JSON.parse('@Html.Raw(Json.Serialize(Model.Input.Queues))');
+
+                var jsonFormatted = jsonData.map(item => [
+                    item.vHost,
+                    item.name,
+                    item.type,
+                    item.state,
+                    item.messages,
+                    item.unacknowledgedMessages,
+                    item.consumers
+                ]);
+
+                return jsonFormatted;
+            }
+        });
     </script>
 }

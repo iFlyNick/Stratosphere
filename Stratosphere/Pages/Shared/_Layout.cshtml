@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-        <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css" />
+        <link href="https://cdn.jsdelivr.net/npm/gridjs/dist/theme/mermaid.min.css" rel="stylesheet" />
     </head>
     <body class="mb-0 h-100" data-theme="">
         <div class="grid-container h-100">
@@ -47,7 +47,8 @@
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
-        <script src="https://cdn.datatables.net/2.0.3/js/dataTables.min.js"></script>
+        <script src="https://unpkg.com/jquery/dist/jquery.min.js"></script>
+        <script src="https://unpkg.com/gridjs-jquery/dist/gridjs.production.min.js"></script>
 
         @await RenderSectionAsync("Scripts", required: false)
     </body>
