@@ -6,14 +6,14 @@
 */
 
 create table if not exists Stratosphere.Service (
-	ServiceId int generated always as identity,
-	ServiceName varchar(255) null,
-	ServiceDescription varchar(4000) null,
-	ServiceTypeId int not null,
+	ServiceId uuid not null,
 	CreatedBy varchar(255) not null,
 	CreatedDate timestamp not null,
 	ModifiedBy varchar(255) null,
 	ModifiedDate timestamp null,
+	ServiceName varchar(255) null,
+	ServiceDescription varchar(4000) null,
+	ServiceTypeId uuid not null,
 	primary key (ServiceId),
 	foreign key (ServiceTypeId) references Stratosphere.ServiceType(ServiceTypeId)
 );

@@ -7,8 +7,8 @@
 */
 
 create table if not exists Stratosphere.ServiceQueue (
-	ServiceId int not null,
-	QueueId int not null,
+	ServiceId uuid not null,
+	QueueId uuid not null,
 	CreatedBy varchar(255) not null,
 	CreatedDate timestamp not null,
 	ModifiedBy varchar(255) null,

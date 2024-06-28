@@ -31,6 +31,8 @@ html {
     --logo-fill: #d1cdc7;
     --main-color-pop: #a73415;
     --main-text-color: #d1cdc7;
+    /*gridjs*/
+    --grid-js-border-color: #4a4e51;
 }
 
 [data-theme='light'] {
@@ -41,6 +43,8 @@ html {
     --logo-fill: #454545;
     --main-color-pop: #e76846;
     --main-text-color: #454545;
+    /*gridjs*/
+    --grid-js-border-color: #4a4e51;
 }
 
 ::selection {
@@ -199,4 +203,39 @@ h2 {
 
 h3 {
     font-size: 28px !important;
+}
+
+/*gridjs custom styling*/
+.gridjs-table, .gridjs-th-content {
+    color: var(--logo-fill) !important;
+}
+
+input.gridjs-input {
+    color: var(--logo-fill) !important;
+    background-color: var(--main-body-color) !important;
+    border-color: var(--logo-fill) !important;
+}
+
+.gridjs-th, .gridjs-tbody, td.gridjs-td {
+    background-color: var(--main-body-color) !important;
+    border-color: var(--grid-js-border-color) !important;
+}
+
+/*footer*/
+.gridjs-footer {
+    background-color: var(--main-body-color) !important;
+    border-color: var(--grid-js-border-color) !important;
+}
+
+.gridjs-summary {
+    color: var(--logo-fill) !important;
+    background-color: var(--main-body-color) !important;
+}
+
+.gridjs-pagination > .gridjs-pages > button,
+.gridjs-pagination > .gridjs-pages > button:disabled,
+.gridjs-pagination > .gridjs-pages > button:hover:disabled,
+.gridjs-pagination > .gridjs-pages > button[disabled] {
+    color: var(--logo-fill);
+    background-color: var(--grid-js-button) !important;
 }

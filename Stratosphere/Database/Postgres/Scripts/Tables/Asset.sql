@@ -10,16 +10,16 @@
 */
 
 create table if not exists Stratosphere.Asset (
-	AssetId int generated always as identity,
-	AssetTypeId int not null,
-	Description varchar(255) not null,
-	ConnectionString varchar(255) not null,
-	RequireCredentials boolean not null default false,
-	ConnectionUser varchar(255) null,
+	AssetId uuid not null,
 	CreatedBy varchar(255) not null,
 	CreatedDate timestamp not null,
 	ModifiedBy varchar(255) null,
 	ModifiedDate timestamp null,
+	AssetTypeId uuid not null,
+	Description varchar(255) not null,
+	ConnectionString varchar(255) not null,
+	RequireCredentials boolean not null default false,
+	ConnectionUser varchar(255) null,
 	primary key (AssetId),
 	foreign key (AssetTypeId) references Stratosphere.AssetType(AssetTypeId)
 );

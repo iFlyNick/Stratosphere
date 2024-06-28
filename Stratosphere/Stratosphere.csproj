@@ -4,6 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>757419fa-b839-4b78-bdeb-557fd2022d12</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,7 +14,6 @@
     <Folder Include="Pages\Administration\Users\" />
     <Folder Include="Pages\Administration\Services\" />
     <Folder Include="Pages\Administration\Queues\" />
-    <Folder Include="Pages\Maintenance\Models\" />
     <Folder Include="Pages\Maintenance\ViewModels\" />
     <Folder Include="Pages\Maintenance\Partials\" />
     <Folder Include="Pages\Monitoring\Partials\" />

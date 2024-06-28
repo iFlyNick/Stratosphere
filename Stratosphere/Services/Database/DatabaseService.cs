@@ -48,7 +48,8 @@ public class DatabaseService : IDatabaseService
             "MaintenanceTemplate",
             "MaintenanceTemplateDetail",
             "MaintenanceRequest",
-            "MaintenanceRequestDetail"
+            "MaintenanceRequestDetail",
+            "MaintenanceRequestDetailHistory"
         };
 
         foreach (var table in tables)

@@ -6,8 +6,8 @@
 */
 
 create table if not exists Stratosphere.ServiceAlert (
-	ServiceId int not null,
-	AlertProfileId int not null,
+	ServiceId uuid not null,
+	AlertProfileId uuid not null,
 	CreatedBy varchar(255) not null,
 	CreatedDate timestamp not null,
 	ModifiedBy varchar(255) null,

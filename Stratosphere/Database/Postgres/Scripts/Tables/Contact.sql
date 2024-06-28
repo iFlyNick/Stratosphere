@@ -9,14 +9,14 @@
 */
 
 create table if not exists Stratosphere.Contact (
-	ContactId int generated always as identity,
-	Name varchar(255) not null,
-	ContactTypeId int not null,
-	ContactValue varchar(1000) not null,
+	ContactId uuid not null,
 	CreatedBy varchar(255) not null,
 	CreatedDate timestamp not null,
 	ModifiedBy varchar(255) null,
 	ModifiedDate timestamp null,
+	Name varchar(255) not null,
+	ContactTypeId uuid not null,
+	ContactValue varchar(1000) not null,
 	primary key (ContactId),
 	foreign key (ContactTypeId) references Stratosphere.ContactType(ContactTypeId)
 );

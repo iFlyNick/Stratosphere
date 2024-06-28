@@ -12,14 +12,14 @@
 */
 
 create table if not exists Stratosphere.ServiceAsset (
-	ServiceId int not null,
-	AssetId int not null,
-	EnvironmentId int not null, 
-	OverrideName varchar(255) null,
+	ServiceId uuid not null,
+	AssetId uuid not null,
 	CreatedBy varchar(255) not null,
 	CreatedDate timestamp not null,
 	ModifiedBy varchar(255) null,
 	ModifiedDate timestamp null,
+	EnvironmentId uuid not null, 
+	OverrideName varchar(255) null,
 	primary key (ServiceId, AssetId),
 	foreign key (ServiceId) references Stratosphere.Service(ServiceId),
 	foreign key (AssetId) references Stratosphere.Asset(AssetId),

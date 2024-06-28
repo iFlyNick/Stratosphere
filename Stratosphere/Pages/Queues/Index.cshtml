@@ -59,15 +59,36 @@
                 limit: 25
             },
             sort: true,
-            resizable: true,
+            resizable: false,
             columns: [
-                "VHost",
-                "Name",
-                "Type",
-                "State",
-                "Messages",
-                "Unacknowledged Messages",
-                "Consumers"
+                { 
+                    name: "VHost",
+                    width: '280px'
+                },
+                {
+                    name: "Name",
+                    width: '280px'
+                },
+                {
+                    name: "Type",
+                    width: '175px'
+                },
+                {
+                    name: "State",
+                    width: '175px'
+                },
+                {
+                    name: "Messages",
+                    width: '140px'
+                },
+                {
+                    name: "Unacked Messages",
+                    width: '215px'
+                },
+                {
+                    name: "Consumers",
+                    width: '150px'
+                }
             ],
             data: () => {
                 var jsonData = JSON.parse('@Html.Raw(Json.Serialize(Model.Input.Queues))');

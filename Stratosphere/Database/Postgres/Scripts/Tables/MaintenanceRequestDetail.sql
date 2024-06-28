@@ -13,15 +13,19 @@
 
 create table if not exists Stratosphere.MaintenanceRequestDetail (
 	MaintenanceRequestDetailId int generated always as identity,
-	MaintenanceRequestId int not null,
-	ServiceId int not null,
-	EnvironmentId int not null,
-	AssetId int not null,
-	StopTime timestamp not null,
-	StartTime timestamp not null,
-	primary key (MaintenanceRequestId, ServiceId, EnvironmentId, AssetId),
+	MaintenanceRequestId uuid not null,
+	CreatedBy varchar(255) not null,
+	CreatedDate timestamp not null,
+	ModifiedBy varchar(255) null,
+	ModifiedDate timestamp null,
+	ServiceId uuid not null,
+	EnvironmentId uuid not null,
+	StartOrder int not null,
+	StopOrder int not null,
+	WaitForQueueClearOnStart boolean not null default false,
+	WaitForQueueClearOnStop boolean not null default false,
+	primary key (MaintenanceRequestDetailId, MaintenanceRequestId),
 	foreign key (MaintenanceRequestId) references Stratosphere.MaintenanceRequest(MaintenanceRequestId),
 	foreign key (ServiceId) references Stratosphere.Service(ServiceId),
-	foreign key (EnvironmentId) references Stratosphere.Environment(EnvironmentId),
-	foreign key (AssetId) references Stratosphere.Asset(AssetId)
+	foreign key (EnvironmentId) references Stratosphere.Environment(EnvironmentId)
 );

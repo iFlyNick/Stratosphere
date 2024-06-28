@@ -8,12 +8,12 @@
 
 create table if not exists Stratosphere.ServiceHealthReportDetail (
 	ServiceHealthReportDetailId int generated always as identity,
-	ServiceHealthReportId int not null,
-	Message varchar(4000) null,
 	CreatedBy varchar(255) not null,
 	CreatedDate timestamp not null,
 	ModifiedBy varchar(255) null,
 	ModifiedDate timestamp null,
+	ServiceHealthReportId uuid not null,
+	Message varchar(4000) null,
 	primary key (ServiceHealthReportDetailId),
 	foreign key (ServiceHealthReportId) references Stratosphere.ServiceHealthReport(ServiceHealthReportId)
 );
