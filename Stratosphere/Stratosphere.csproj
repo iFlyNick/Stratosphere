@@ -14,16 +14,19 @@
     <Folder Include="Pages\Administration\Users\" />
     <Folder Include="Pages\Administration\Services\" />
     <Folder Include="Pages\Administration\Queues\" />
+    <Folder Include="Pages\Maintenance\Data\" />
     <Folder Include="Pages\Maintenance\ViewModels\" />
     <Folder Include="Pages\Maintenance\Partials\" />
+    <Folder Include="Pages\Monitoring\Data\" />
     <Folder Include="Pages\Monitoring\Partials\" />
+    <Folder Include="Pages\Queues\Data\Repository\" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dapper" Version="2.1.28" />
-    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.5" />
+    <PackageReference Include="EFCore.NamingConventions" Version="8.0.3" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="Npgsql" Version="8.0.2" />
+    <PackageReference Include="Npgsql" Version="8.0.3" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
     <PackageReference Include="RabbitMQ.Client" Version="6.8.1" />
   </ItemGroup>
 

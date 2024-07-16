@@ -1,17 +1,11 @@
-﻿using Stratosphere.Pages.Maintenance.Data;
-
-namespace Stratosphere.Pages.Maintenance.Services;
+﻿namespace Stratosphere.Pages.Maintenance.Services;
 
 public class MaintenanceModeService : IMaintenanceModeService
 {
-    private readonly IDbRepository _repository;
     private readonly ILogger<MaintenanceModeService> _logger;
 
-    public MaintenanceModeService(ILogger<MaintenanceModeService> logger, IDbRepository repository)
+    public MaintenanceModeService(ILogger<MaintenanceModeService> logger)
     {
         _logger = logger;
-        _repository = repository;
-    }
-
-    
+    } 
 }

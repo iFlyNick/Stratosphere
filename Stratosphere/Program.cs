@@ -1,11 +1,10 @@
-using Stratosphere.Data.Postgres.Context;
-using Stratosphere.Data.Postgres.Repository;
-using Stratosphere.Services.Database;
+using Microsoft.EntityFrameworkCore;
+using Stratosphere.Data;
 using Stratosphere.Pages.Monitoring;
-using Stratosphere.Services.Http;
-using Stratosphere.Pages.Queues.Models;
-using Stratosphere.Services.Queues;
 using Stratosphere.Pages.Queues;
+using Stratosphere.Pages.Queues.Models;
+using Stratosphere.Services.Http;
+using Stratosphere.Services.Queues;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,9 +16,11 @@ builder.Services.AddHttpClient<IHttpService, HttpService>();
 builder.Services.Configure<MessageQueueApiSettings>(builder.Configuration.GetSection("MessageQueueApiSettings"));
 builder.Services.AddSingleton<IQueueApiService, QueueApiService>();
 
-builder.Services.AddSingleton<IPostgresContext, PostgresContext>();
-builder.Services.AddSingleton<IPostgresRepository, PostgresRepository>();
-builder.Services.AddSingleton<IDatabaseService, DatabaseService>();
+builder.Services.AddDbContext<StratosphereContext>(options =>
+{
+    options.UseNpgsql(builder.Configuration.GetConnectionString("Postgres"))
+        .UseSnakeCaseNamingConvention();
+});
 
 //add services for each page using extension methods
 builder.Services.AddMonitoringServices();
@@ -43,5 +44,13 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
+
+//lol, figure out migrations instead of this
+using (var scope = app.Services.CreateScope())
+{
+    var ctx = scope.ServiceProvider.GetRequiredService<StratosphereContext>();
+    await ctx.Database.EnsureDeletedAsync();
+    await ctx.Database.EnsureCreatedAsync();
+}
 
 app.Run();
