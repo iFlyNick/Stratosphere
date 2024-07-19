@@ -9,6 +9,8 @@ using Stratosphere.Pages.Queues;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//dummy update for nuget packages
+
 // Add services to the container.
 builder.Services.AddRazorPages();
 
