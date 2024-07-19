@@ -3,13 +3,8 @@ using Stratosphere.Data.Models;
 
 namespace Stratosphere.Data;
 
-public class StratosphereContext : DbContext
+public class StratosphereContext(DbContextOptions<StratosphereContext> options) : DbContext(options)
 {
-    public StratosphereContext(DbContextOptions<StratosphereContext> options) : base(options)
-    {
-        
-    }
-
     public DbSet<Alarm> Alarm { get; set; }
     public DbSet<AlertHistory> AlertHistory { get; set; }
     public DbSet<AlertProfile> AlertProfile { get; set; }

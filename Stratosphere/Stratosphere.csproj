@@ -8,18 +8,33 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Database\Postgres\Scripts\Seeds\" />
+    <Compile Remove="Database\**" />
+    <Compile Remove="Pages\Maintenance\Data\**" />
+    <Compile Remove="Pages\Monitoring\Data\**" />
+    <Compile Remove="Pages\Queues\Data\**" />
+    <Content Remove="Database\**" />
+    <Content Remove="Pages\Maintenance\Data\**" />
+    <Content Remove="Pages\Monitoring\Data\**" />
+    <Content Remove="Pages\Queues\Data\**" />
+    <EmbeddedResource Remove="Database\**" />
+    <EmbeddedResource Remove="Pages\Maintenance\Data\**" />
+    <EmbeddedResource Remove="Pages\Monitoring\Data\**" />
+    <EmbeddedResource Remove="Pages\Queues\Data\**" />
+    <None Remove="Database\**" />
+    <None Remove="Pages\Maintenance\Data\**" />
+    <None Remove="Pages\Monitoring\Data\**" />
+    <None Remove="Pages\Queues\Data\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Pages\Administration\Environments\" />
     <Folder Include="Pages\Administration\Contacts\" />
     <Folder Include="Pages\Administration\Users\" />
     <Folder Include="Pages\Administration\Services\" />
     <Folder Include="Pages\Administration\Queues\" />
-    <Folder Include="Pages\Maintenance\Data\" />
     <Folder Include="Pages\Maintenance\ViewModels\" />
     <Folder Include="Pages\Maintenance\Partials\" />
-    <Folder Include="Pages\Monitoring\Data\" />
     <Folder Include="Pages\Monitoring\Partials\" />
-    <Folder Include="Pages\Queues\Data\Repository\" />
   </ItemGroup>
 
   <ItemGroup>
