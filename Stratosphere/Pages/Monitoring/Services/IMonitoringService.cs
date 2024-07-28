@@ -4,5 +4,5 @@ namespace Stratosphere.Pages.Monitoring.Services;
 
 public interface IMonitoringService
 {
-    Task<List<Service>?> GetServices();
+    //Task<List<Service>?> GetServices();
 }

@@ -1,11 +1,12 @@
-using Stratosphere.Data.Postgres.Context;
-using Stratosphere.Data.Postgres.Repository;
-using Stratosphere.Services.Database;
+using Microsoft.EntityFrameworkCore;
+using Serilog;
+using Stratosphere.Data;
+using Stratosphere.Pages.Maintenance;
 using Stratosphere.Pages.Monitoring;
-using Stratosphere.Services.Http;
-using Stratosphere.Pages.Queues.Models;
-using Stratosphere.Services.Queues;
 using Stratosphere.Pages.Queues;
+using Stratosphere.Pages.Queues.Models;
+using Stratosphere.Services.Http;
+using Stratosphere.Services.Queues;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,16 +15,32 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 
+builder.Services.AddLogging(loggingBuilder =>
+{
+    loggingBuilder.ClearProviders()
+        .AddSerilog(new LoggerConfiguration()
+            .Enrich.FromLogContext()
+            .MinimumLevel.Verbose()
+            .WriteTo.Console()
+            .WriteTo.File("Logs/stratosphere.log", rollOnFileSizeLimit: true, fileSizeLimitBytes: 1000000) //1MB
+            .CreateLogger());
+});
+
+builder.Services.AddMemoryCache();
 builder.Services.AddHttpClient<IHttpService, HttpService>();
 
 builder.Services.Configure<MessageQueueApiSettings>(builder.Configuration.GetSection("MessageQueueApiSettings"));
 builder.Services.AddSingleton<IQueueApiService, QueueApiService>();
 
-builder.Services.AddSingleton<IPostgresContext, PostgresContext>();
-builder.Services.AddSingleton<IPostgresRepository, PostgresRepository>();
-builder.Services.AddSingleton<IDatabaseService, DatabaseService>();
+builder.Services.AddDbContext<StratosphereContext>(options =>
+{
+    options.UseNpgsql(builder.Configuration.GetConnectionString("Postgres"))
+        .UseSnakeCaseNamingConvention()
+        .EnableSensitiveDataLogging();
+});
 
 //add services for each page using extension methods
+builder.Services.AddMaintenanceServices();
 builder.Services.AddMonitoringServices();
 builder.Services.AddQueueServices();
 
@@ -45,5 +62,13 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
+
+//lol, figure out migrations instead of this
+using (var scope = app.Services.CreateScope())
+{
+    var ctx = scope.ServiceProvider.GetRequiredService<StratosphereContext>();
+    await ctx.Database.EnsureDeletedAsync();
+    await ctx.Database.EnsureCreatedAsync();
+}
 
 app.Run();

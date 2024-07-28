@@ -18,11 +18,11 @@ public class IndexModel : PageModel
 
     public async Task<IActionResult> OnGet()
     {
-        var services = await _monitoringService.GetServices();
+        //var services = await _monitoringService.GetServices();
 
         Input = new MonitoringIndexViewModel
         {
-            Services = services
+            Services = null
         };
 
         return Page();

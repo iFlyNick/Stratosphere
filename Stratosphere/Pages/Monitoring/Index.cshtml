@@ -14,11 +14,20 @@
 </div>
 
 <div id="mainBodyLayer">
-    @foreach (var service in Model.Input.Services)
+    @if (Model is null || Model.Input is null || Model.Input.Services is null || !Model.Input.Services.Any())
     {
         <div>
-            <h2>@service.ServiceName</h2>
-            <p>@service.ServiceDescription</p>
+            <h1>No services to display.</h1>
         </div>
+    }
+    else
+    {
+        @foreach (var service in Model.Input.Services)
+        {
+            <div>
+                <h2>@service.ServiceName</h2>
+                <p>@service.ServiceDescription</p>
+            </div>
+        }
     }
 </div>

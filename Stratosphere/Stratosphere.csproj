@@ -8,7 +8,26 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Database\Postgres\Scripts\Seeds\" />
+    <Compile Remove="Database\**" />
+    <Compile Remove="Pages\Maintenance\Data\**" />
+    <Compile Remove="Pages\Monitoring\Data\**" />
+    <Compile Remove="Pages\Queues\Data\**" />
+    <Content Remove="Database\**" />
+    <Content Remove="Pages\Maintenance\Data\**" />
+    <Content Remove="Pages\Monitoring\Data\**" />
+    <Content Remove="Pages\Queues\Data\**" />
+    <EmbeddedResource Remove="Database\**" />
+    <EmbeddedResource Remove="Pages\Maintenance\Data\**" />
+    <EmbeddedResource Remove="Pages\Monitoring\Data\**" />
+    <EmbeddedResource Remove="Pages\Queues\Data\**" />
+    <None Remove="Database\**" />
+    <None Remove="Pages\Maintenance\Data\**" />
+    <None Remove="Pages\Monitoring\Data\**" />
+    <None Remove="Pages\Queues\Data\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Logs\" />
     <Folder Include="Pages\Administration\Environments\" />
     <Folder Include="Pages\Administration\Contacts\" />
     <Folder Include="Pages\Administration\Users\" />
@@ -20,11 +39,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dapper" Version="2.1.35" />
-    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.1" />
+    <PackageReference Include="EFCore.NamingConventions" Version="8.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="8.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Npgsql" Version="8.0.3" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
     <PackageReference Include="RabbitMQ.Client" Version="6.8.1" />
+    <PackageReference Include="Serilog" Version="4.0.1" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
   </ItemGroup>
 
 </Project>

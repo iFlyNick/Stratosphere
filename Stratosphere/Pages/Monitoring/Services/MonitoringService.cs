@@ -1,21 +1,20 @@
-﻿using Stratosphere.Pages.Monitoring.Data;
-using Stratosphere.Pages.Monitoring.Models;
+﻿using Stratosphere.Pages.Monitoring.Models;
 
 namespace Stratosphere.Pages.Monitoring.Services;
 
 public class MonitoringService : IMonitoringService
 {
-    protected readonly IDbRepository _repository;
+    //protected readonly IDbRepository _repository;
     protected readonly ILogger<MonitoringService> _logger;
     
-    public MonitoringService(IDbRepository repository, ILogger<MonitoringService> logger)
+    public MonitoringService(/*IDbRepository repository, */ILogger<MonitoringService> logger)
     {
-        _repository = repository;
+        //_repository = repository;
         _logger = logger;
     }
 
-    public async Task<List<Service>?> GetServices()
-    {
-        return await _repository.GetServices();
-    }
+    //public async Task<List<Service>?> GetServices()
+    //{
+    //    return await _repository.GetServices();
+    //}
 }
