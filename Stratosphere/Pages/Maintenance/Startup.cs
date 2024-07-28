@@ -4,7 +4,7 @@ namespace Stratosphere.Pages.Maintenance;
 
 public static class Startup
 {
-    public static void AddMonitoringServices(this IServiceCollection services)
+    public static void AddMaintenanceServices(this IServiceCollection services)
     {
         services.AddScoped<IMaintenanceModeService, MaintenanceModeService>();
     }

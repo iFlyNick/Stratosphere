@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using Stratosphere.Data;
+using Stratosphere.Pages.Maintenance;
 using Stratosphere.Pages.Monitoring;
 using Stratosphere.Pages.Queues;
 using Stratosphere.Pages.Queues.Models;
@@ -11,6 +13,18 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 
+builder.Services.AddLogging(loggingBuilder =>
+{
+    loggingBuilder.ClearProviders()
+        .AddSerilog(new LoggerConfiguration()
+            .Enrich.FromLogContext()
+            .MinimumLevel.Verbose()
+            .WriteTo.Console()
+            .WriteTo.File("Logs/stratosphere.log", rollOnFileSizeLimit: true, fileSizeLimitBytes: 1000000) //1MB
+            .CreateLogger());
+});
+
+builder.Services.AddMemoryCache();
 builder.Services.AddHttpClient<IHttpService, HttpService>();
 
 builder.Services.Configure<MessageQueueApiSettings>(builder.Configuration.GetSection("MessageQueueApiSettings"));
@@ -19,10 +33,12 @@ builder.Services.AddSingleton<IQueueApiService, QueueApiService>();
 builder.Services.AddDbContext<StratosphereContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("Postgres"))
-        .UseSnakeCaseNamingConvention();
+        .UseSnakeCaseNamingConvention()
+        .EnableSensitiveDataLogging();
 });
 
 //add services for each page using extension methods
+builder.Services.AddMaintenanceServices();
 builder.Services.AddMonitoringServices();
 builder.Services.AddQueueServices();
 

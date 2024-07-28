@@ -5,24 +5,20 @@ using System.ComponentModel.DataAnnotations;
 namespace Stratosphere.Data.Models;
 
 [PrimaryKey(nameof(MaintenanceRequestId), nameof(MaintenanceRequestDetailId), nameof(MaintenanceRequestDetailHistoryId))]
-public class MaintenanceRequestDetailHistory : BaseModel
+public class MaintenanceRequestDetailHistory
 {
-    [Required]
-    public Guid? MaintenanceRequestId { get; set; }
-    [Required]
-    public int MaintenanceRequestDetailId { get; set; }
-    [Required]
-    public int MaintenanceRequestDetailHistoryId { get; set; }
-    [Required]
-    public Guid? ServiceId { get; set; }
-    [Required]
-    public Guid? EnvironmentId { get; set; }
-    [Required]
-    public Guid? AssetId { get; set; }
-    [Required]
-    public DateTime? ExecutionTime { get; set; }
-    [Required]
-    public string? Action { get; set; }
+    [Required] public Guid? MaintenanceRequestId { get; set; }
+    [Required] public int MaintenanceRequestDetailId { get; set; }
+    [Required] public int MaintenanceRequestDetailHistoryId { get; set; }
+    [Required] public string? CreatedBy { get; set; }
+    [Required] public DateTime? CreatedDate { get; set; }
+    public string? ModifiedBy { get; set; }
+    public DateTime? ModifiedDate { get; set; }
+    [Required] public Guid? ServiceId { get; set; }
+    [Required] public Guid? EnvironmentId { get; set; }
+    [Required] public Guid? AssetId { get; set; }
+    [Required] public DateTime? ExecutionTime { get; set; }
+    [Required] public string? Action { get; set; }
     public bool IsSuccess { get; set; }
     public string? StatusMessage { get; set; }
 }

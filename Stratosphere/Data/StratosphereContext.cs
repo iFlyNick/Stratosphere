@@ -32,10 +32,6 @@ public class StratosphereContext(DbContextOptions<StratosphereContext> options) 
     public DbSet<ServiceType> ServiceType { get; set; }
     public DbSet<VirtualHost> VirtualHost { get; set; }
 
-    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
-    //optionsBuilder.UseNpgsql(@"Host=localhost;Port=5432;User Id=postgres;Password=postgres;Database=stratosphere")
-    //.UseSnakeCaseNamingConvention();
-
     //abstracts the fluentapi calls to the configuration classes to keep this class relatively clean
     protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);

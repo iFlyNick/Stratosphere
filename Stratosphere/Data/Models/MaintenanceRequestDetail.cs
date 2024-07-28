@@ -5,22 +5,19 @@ using System.ComponentModel.DataAnnotations;
 namespace Stratosphere.Data.Models;
 
 [PrimaryKey(nameof(MaintenanceRequestId), nameof(MaintenanceRequestDetailId))]
-public class MaintenanceRequestDetail : BaseModel
+public class MaintenanceRequestDetail
 {
-    [Required]
-    public Guid? MaintenanceRequestId { get; set; }
-    [Required]
-    public int MaintenanceRequestDetailId { get; set; }
-    [Required]
-    public Guid? ServiceId { get; set; }
-    [Required]
-    public Guid? EnvironmentId { get; set; }
-    [Required]
-    public Guid? AssetId { get; set; }
-    [Required]
-    public int StartOrder { get; set; }
-    [Required]
-    public int StopOrder { get; set; }
+    [Required] public Guid? MaintenanceRequestId { get; set; }
+    [Required] public int MaintenanceRequestDetailId { get; set; }
+    [Required] public string? CreatedBy { get; set; }
+    [Required] public DateTime? CreatedDate { get; set; }
+    public string? ModifiedBy { get; set; }
+    public DateTime? ModifiedDate { get; set; }
+    [Required] public Guid? ServiceId { get; set; }
+    [Required] public Guid? EnvironmentId { get; set; }
+    [Required] public Guid? AssetId { get; set; }
+    [Required] public int StartOrder { get; set; }
+    [Required] public int StopOrder { get; set; }
     public bool WaitForQueueClearOnStart { get; set; }
     public bool WaitForQueueClearOnStop { get; set; }
     public bool? IsSuccess { get; set; }
