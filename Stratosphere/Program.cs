@@ -20,7 +20,7 @@ builder.Services.AddLogging(loggingBuilder =>
     loggingBuilder.ClearProviders()
         .AddSerilog(new LoggerConfiguration()
             .Enrich.FromLogContext()
-            .MinimumLevel.Verbose()
+            .MinimumLevel.Debug()
             .WriteTo.Console()
             .WriteTo.File("Logs/stratosphere.log", rollOnFileSizeLimit: true, fileSizeLimitBytes: 1000000) //1MB
             .CreateLogger());
