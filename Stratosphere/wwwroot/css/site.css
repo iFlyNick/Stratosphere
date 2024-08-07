@@ -21,6 +21,8 @@ html {
     --main-sidebar-width: 275px;
     --user-container-height: 80px;
     --header-searchbar-width: 400px;
+    --main-content-title-height: 60px;
+    --admin-menu-width: 270px;
 }
 
 [data-theme='dark'] {
@@ -62,6 +64,19 @@ html {
     grid-template-areas:
         "branding header"
         "sidebar main";
+}
+
+.admin-grid-container {
+    display: grid;
+    height: calc(100vh - (3 * var(--main-header-height)));
+    grid-area: content;
+    grid-template-columns: var(--admin-menu-width) 1fr;
+    grid-template-areas:
+        "menu content";
+}
+
+.admin-grid-menu {
+    grid-area: menu;
 }
 
 .btn-primary {
@@ -148,8 +163,35 @@ html {
     min-height: 500px;
 }
 
-.mainCardContent {
-    min-height: 500px;
+/*bootstrap modal helpers*/
+.modal-content {
+    background-color: var(--main-body-color);
+}
+
+.form-control, .form-control:focus {
+    background-color: var(--main-header-color);
+    color: var(--main-text-color);
+}
+
+    .form-control:focus {
+        background-color: var(--main-header-color);
+    }
+
+.modalSelectOptions {
+    background-color: var(--main-header-color);
+    color: var(--main-text-color);
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    display: flex;
+    font-size: 1rem;
+    width: 100%;
+    font-weight: 400;
+    line-height: 1.5;
+    background-clip: padding-box;
+    border: 1px solid var(--main-text-color);
+    border-radius: .25rem;
+    padding: .375rem .75rem;
 }
 
 .navTab {
@@ -164,29 +206,95 @@ html {
         color: var(--main-color-pop);
     }
 
+.adminCreateButton {
+    height: 80%;
+}
+
+.adminAreaRow {
+    padding: 1rem;
+}
+
+.adminHeaderRow {
+    height: var(--main-header-height);
+    width: 100%;
+    position: sticky;
+}
+
+.mainCard .offcanvas {
+    position: absolute;
+    background-color: var(--main-header-color);
+    width: 70%;
+    transition: none !important;
+    margin-top: -1rem; /*reverting the padding added to the outermost container card*/
+    margin-bottom: -1rem; /*reverting the padding added to the outermost container card*/
+}
+
+.offcanvas-end {
+    border-color: var(--main-color-pop);
+}
+
 .adminAreaButton {
-    font-size: 2rem;
+    font-size: 1.25rem;
     font-weight: bold;
-    background: orange;
-    margin: 2rem 2rem 2rem 2rem;
-    height: 50%;
-    width: 30%;
+    margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: .5rem;
+    background-color: var(--main-body-color) !important;
+    border: 0px !important;
+    transition: none !important;
 }
+
+    .adminAreaButton:hover {
+        background-color: var(--main-color-pop) !important;
+        transition: none !important;
+    }
+
+    .adminAreaButton.active {
+        background-color: var(--main-color-pop) !important;
+        transition: none !important;
+    }
 
 .hoverPointer {
     cursor: pointer;
 }
 
 /*bootstrap helpers*/
+.h-90 {
+    height: 90%;
+}
+
+.h-80 {
+    height: 80%;
+}
+
+.h-70 {
+    height: 70%;
+}
+
 .h-60 {
     height: 60%;
 }
 
+.h-50 {
+    height: 50%;
+}
+
 .h-40 {
     height: 40%;
+}
+
+.h-30 {
+    height: 30%;
+}
+
+.h-20 {
+    height: 20%;
+}
+
+.h-10 {
+    height: 10%;
 }
 
 .w-98 {

@@ -1,36 +1,66 @@
 ﻿@page
 @model Stratosphere.Pages.Administration.IndexModel
+@Html.AntiForgeryToken()
 @{
+    Layout = "_Layout";
+
+    ViewData["Title"] = "Administration";
 }
 
+@section Scripts {
+    <script src="~/js/Administration.js"></script>
+    <script src="~/js/PartialTest.js"></script>
+}
 
-<h1>Admin</h1>
+<div class="pb-2">
+    <h1>Administration</h1>
+</div>
 
-<div class="content mainCard">
-    <div class="row d-flex justify-content-between mainCardContent">
-        <div class="row">
-            <div class="card adminAreaButton col-6">
-                <span class="col-4"><i class="bi bi-person-lines-fill pe-4"></i>Alarms</span>
-            </div>
-            <div class="card adminAreaButton col-6">
-                <span class="col-4"><i class="bi bi-person-lines-fill pe-4"></i>Assets</span>
+<div class="mainCard admin-grid-container overflow-hidden">
+    <div class="adminAreaRow flex-column align-items-left admin-grid-menu">
+        <div id="alarms" class="pb-2">
+            <div class="btn btn-primary adminAreaButton">
+                <span>Alarms</span>
             </div>
         </div>
-        <div class="row">
-            <div class="card adminAreaButton col-6">
-                <span class="col-4"><i class="bi bi-person-lines-fill pe-4"></i>Contacts</span>
-            </div>
-            <div class="card adminAreaButton col-6">
-                <span class="col-4"><i class ="bi bi-person-lines-fill pe-4"></i>Environments</span>
+        <div id="assets" class="pb-2">
+            <div class="btn btn-primary adminAreaButton">
+                <span>Assets</span>
             </div>
         </div>
-        <div class="row">
-            <div class="card adminAreaButton col-6">
-                <span class="col-4"><i class="bi bi-person-lines-fill pe-4"></i>Queues</span>
-            </div>
-            <div class="card adminAreaButton col-6">
-                <span class="col-4"><i class="bi bi-person-lines-fill pe-4"></i>Services</span>
+        <div id="contacts" class="pb-2">
+            <div class="btn btn-primary adminAreaButton">
+                <span>Contacts</span>
             </div>
         </div>
+        <div id="environments" class="pb-2">
+            <div class="btn btn-primary adminAreaButton">
+                <span>Environments</span>
+            </div>
+        </div>
+        <div id="queues" class="pb-2">
+            <div class="btn btn-primary adminAreaButton">
+                <span>Queues</span>
+            </div>
+        </div>
+        <div id="services" class="pb-2">
+            <div class="btn btn-primary adminAreaButton">
+                <span>Services</span>
+            </div>
+        </div>
+        <div id="serviceTypes" class="pb-2">
+            <div class="btn btn-primary adminAreaButton">
+                <span>Service Types</span>
+            </div>
+        </div>
+        <div id="users" class="pb-2">
+            <div class="btn btn-primary adminAreaButton">
+                <span>Users</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="adminObjectContainer" class="adminAreaRow admin-grid-content position-relative">
+        <h5>Select a menu option on the left to manage specific areas of the application</h5>
     </div>
 </div>

@@ -3,9 +3,12 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Stratosphere.Pages.Administration;
 
-public class IndexModel : PageModel
+public class IndexModel(ILogger<IndexModel> logger) : PageModel
 {
-    public void OnGet()
+    private readonly ILogger<IndexModel> _logger = logger;
+
+    public async Task<IActionResult> OnGet()
     {
+        return Page();
     }
 }

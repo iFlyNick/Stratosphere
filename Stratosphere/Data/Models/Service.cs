@@ -14,12 +14,16 @@ public class Service
     [Required] public string? Name { get; set; }
     [Required] public string? Description { get; set; }
     [Required] public Guid? ServiceTypeId { get; set; }
+
+    public ServiceType? ServiceType { get; set; }
 }
 
 public class ServiceConfiguration : IEntityTypeConfiguration<Service>
 {
     public void Configure(EntityTypeBuilder<Service> builder)
     {
-
+        builder.HasOne(s => s.ServiceType)
+            .WithMany(st => st.Services)
+            .HasForeignKey(s => s.ServiceTypeId);
     }
 }

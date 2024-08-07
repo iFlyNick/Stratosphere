@@ -2,6 +2,10 @@
     $('#darkModeToggle').on('click', function () {
         toggleDarkModeTheme();
     });
+
+    $('#createModal').on('hidden.bs.modal', function () {
+        $(this).find('form').trigger('reset');
+    });
 });
 
 function toggleDarkModeTheme() {
@@ -10,6 +14,7 @@ function toggleDarkModeTheme() {
 
     //update theme and local storage
     $('body').attr('data-theme', newTheme);
+    $('body').attr('data-bs-theme', newTheme);
     setLocalStorageKeyValue('theme', newTheme);
 
     //update icon

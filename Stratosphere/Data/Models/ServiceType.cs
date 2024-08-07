@@ -12,12 +12,16 @@ public class ServiceType
     public string? ModifiedBy { get; set; }
     public DateTime? ModifiedDate { get; set; }
     [Required] public string? Name { get; set; }
+
+    public List<Service>? Services { get; set; }
 }
 
 public class ServiceTypeConfiguration : IEntityTypeConfiguration<ServiceType>
 {
     public void Configure(EntityTypeBuilder<ServiceType> builder)
     {
-
+        builder.HasMany(st => st.Services)
+            .WithOne(s => s.ServiceType)
+            .HasForeignKey(s => s.ServiceTypeId);
     }
 }

@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
         <link href="https://cdn.jsdelivr.net/npm/gridjs/dist/theme/mermaid.min.css" rel="stylesheet" />
     </head>
-    <body class="mb-0 h-100" data-theme="">
+    <body class="mb-0 h-100" data-theme="" data-bs-theme="">
         <div class="grid-container h-100">
             <div class="branding">
                 <partial name="_Logo"/>
@@ -20,7 +20,7 @@
             <div class="sidebar h-100 d-flex flex-column justify-content-between">
                 <partial name="_MainSidebar" />
             </div>
-            <main role="main" class="overflow-auto main h-100 w-100 pt-2 pe-3 pb-2 ps-3">
+            <main role="main" class="main overflow-hidden h-100 w-100 pt-2 pe-3 pb-2 ps-3">
                 @RenderBody()
             </main>
         </div>
@@ -30,9 +30,11 @@
             var theme = localStorage.getItem('theme');
             if (theme) {
                 document.body.setAttribute('data-theme', theme);
+                document.body.setAttribute('data-bs-theme', theme);
             } else {
                 var defaultTheme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
                 document.body.setAttribute('data-theme', defaultTheme);
+                document.body.setAttribute('data-bs-theme', defaultTheme);
                 localStorage.setItem('theme', defaultTheme);
             }
 

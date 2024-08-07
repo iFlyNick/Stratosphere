@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Stratosphere.Data;
+using Stratosphere.Pages.Administration;
 using Stratosphere.Pages.Maintenance;
 using Stratosphere.Pages.Monitoring;
 using Stratosphere.Pages.Queues;
@@ -40,9 +41,12 @@ builder.Services.AddDbContext<StratosphereContext>(options =>
 });
 
 //add services for each page using extension methods
+builder.Services.AddAdministrationServices();
 builder.Services.AddMaintenanceServices();
 builder.Services.AddMonitoringServices();
 builder.Services.AddQueueServices();
+
+builder.Services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
 
 var app = builder.Build();
 
@@ -67,8 +71,12 @@ app.MapRazorPages();
 using (var scope = app.Services.CreateScope())
 {
     var ctx = scope.ServiceProvider.GetRequiredService<StratosphereContext>();
-    await ctx.Database.EnsureDeletedAsync();
-    await ctx.Database.EnsureCreatedAsync();
+    var recreateDb = false;
+    if (recreateDb)
+    {
+        await ctx.Database.EnsureDeletedAsync();
+        await ctx.Database.EnsureCreatedAsync();
+    }
 }
 
 app.Run();
