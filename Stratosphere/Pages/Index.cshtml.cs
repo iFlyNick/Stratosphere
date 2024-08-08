@@ -1,29 +1,15 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Stratosphere.Pages;
-public class IndexModel : PageModel
+public class IndexModel(ILogger<IndexModel> logger, IMemoryCache cache) : PageModel
 {
-    private readonly ILogger<IndexModel> _logger;
-
-    public IndexModel(ILogger<IndexModel> logger)
-    {
-        _logger = logger;
-    }
+    private readonly ILogger<IndexModel> _logger = logger;
+    private readonly IMemoryCache _cache = cache;
 
     public async Task<IActionResult> OnGet(CancellationToken cancellationToken)
     {
-        cancellationToken.ThrowIfCancellationRequested();
-
-        try
-        {
-
-        } 
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error creating database");
-        }
-
         return Page();
     }
 }

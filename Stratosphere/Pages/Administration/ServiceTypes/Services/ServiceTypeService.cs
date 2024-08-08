@@ -9,6 +9,28 @@ public class ServiceTypeService(ILogger<ServiceTypeService> logger, IDbRepositor
     private readonly ILogger<ServiceTypeService> _logger = logger;
     private readonly IDbRepository _dbRepository = dbRepository;
 
+    public async Task<ServiceTypeVM?> GetServiceType(string? name)
+    {
+        if (string.IsNullOrEmpty(name))
+            return null;
+
+        var dbRecord = await _dbRepository.GetServiceTypeByName(name);
+
+        var retVal = MapServiceTypesToViewModels(dbRecord);
+
+        return retVal;
+    }
+
+    public async Task<int> DeleteServiceTypeByName(string? name)
+    {
+        if (string.IsNullOrEmpty(name))
+            return 0;
+
+        var rows = await _dbRepository.DeleteServiceTypeByName(name);
+
+        return rows;
+    }
+
     public async Task<List<ServiceTypeVM>> GetServiceTypes()
     {
         var dbRecords = await _dbRepository.GetAllServiceTypes();
@@ -42,5 +64,17 @@ public class ServiceTypeService(ILogger<ServiceTypeService> logger, IDbRepositor
             Id = x.ServiceTypeId,
             Name = x.Name
         }).ToList();
+    }
+
+    private static ServiceTypeVM? MapServiceTypesToViewModels(ServiceType? serviceType)
+    {
+        if (serviceType is null)
+            return null;
+
+        return new ServiceTypeVM()
+        {
+            Id = serviceType.ServiceTypeId,
+            Name = serviceType.Name
+        };
     }
 }

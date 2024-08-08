@@ -3,6 +3,7 @@
 @{
     var pageType = "Service Types";
     var pageTypeSingle = "Service Type";
+    var refreshGridHelper = "ServiceTypesData";
 
     var canvasId = $"adminCanvas{pageTypeSingle}";
 }
@@ -13,8 +14,11 @@
             <h1>@pageType</h1>
         </div>
 
-        <div class="d-flex col-6 justify-content-end">
-            <button type="button" class="btn btn-primary adminCreateButton" data-bs-toggle="offcanvas" data-bs-target="#adminCanvas">
+        <div id="@refreshGridHelper" class="d-flex col-6 justify-content-end">
+            <button type="button" id="adminRefreshGridButton" class="btn btn-secondary adminHeaderButton me-3">
+                <span><i class="bi bi-arrow-clockwise me-2"></i>Refresh Grid</span>
+            </button>
+            <button type="button" id="adminCreateButton" class="btn btn-primary adminHeaderButton" data-bs-toggle="offcanvas" data-bs-target="#adminCanvas">
                 <span><i class="bi bi-plus-square me-2"></i>Add @pageTypeSingle</span>
             </button>
         </div>
@@ -43,7 +47,7 @@
             <form autocomplete="off" id="serviceTypeForm">
                 <div class="form-group required">
                     <label for="Name">Name</label>
-                    <input type="text" class="form-control" id="serviceTypeModalName" placeholder="Name" required="true">
+                    <input type="text" class="form-control" id="serviceTypeModalName" placeholder="Name" required>
                 </div>
             </form>
         </div>
@@ -53,7 +57,7 @@
 <script>
     $(function () {
         var jsonData = JSON.parse('@Html.Raw(Json.Serialize(Model.ServiceTypes))');
-        Stratosphere.loadServiceTypeDataGrid(jsonData);
+        Stratosphere.loadServiceTypesDataGrid(jsonData);
     });
 </script>
 

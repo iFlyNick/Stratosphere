@@ -28,6 +28,7 @@ builder.Services.AddLogging(loggingBuilder =>
 });
 
 builder.Services.AddMemoryCache();
+
 builder.Services.AddHttpClient<IHttpService, HttpService>();
 
 builder.Services.Configure<MessageQueueApiSettings>(builder.Configuration.GetSection("MessageQueueApiSettings"));
