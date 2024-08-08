@@ -1,0 +1,59 @@
+﻿@using Stratosphere.Pages.Administration.ServiceTypes.ViewModels;
+@model ServiceTypesVM
+@{
+    var pageType = "Service Types";
+    var pageTypeSingle = "Service Type";
+
+    var canvasId = $"adminCanvas{pageTypeSingle}";
+}
+
+<div class="d-flex row w-100 align-items-start">
+    <div class="row adminHeaderRow">
+        <div class="d-flex col-6 justify-content-start">
+            <h1>@pageType</h1>
+        </div>
+
+        <div class="d-flex col-6 justify-content-end">
+            <button type="button" class="btn btn-primary adminCreateButton" data-bs-toggle="offcanvas" data-bs-target="#adminCanvas">
+                <span><i class="bi bi-plus-square me-2"></i>Add @pageTypeSingle</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="overflow-auto h-90">
+        <div id="mainDataTable">
+
+        </div>
+    </div>
+
+    <div class="offcanvas offcanvas-end d-none" data-bs-backdrop="false" tabindex="-1" id="adminCanvas">
+        <div class="offcanvas-header">
+            <h2 class="offcanvas-title" id="@canvasId">Create @pageTypeSingle</h2>
+            <div class="d-flex">
+                <button type="button" class="btn btn-primary me-2" id="newServiceTypeSubmit">Submit</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">Close</button>
+            </div>
+        </div>
+        <div class="offcanvas-body">
+            <div id="info">
+                <p>Service types define the type a given service will run as.</p>
+                <p>Examples include Docker, IIS, Windows Service, etc.</p>
+                <p>Additional application configuration could be needed to support new service types.</p>
+            </div>
+            <form autocomplete="off" id="serviceTypeForm">
+                <div class="form-group required">
+                    <label for="Name">Name</label>
+                    <input type="text" class="form-control" id="serviceTypeModalName" placeholder="Name" required="true">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        var jsonData = JSON.parse('@Html.Raw(Json.Serialize(Model.ServiceTypes))');
+        Stratosphere.loadServiceTypeDataGrid(jsonData);
+    });
+</script>
+

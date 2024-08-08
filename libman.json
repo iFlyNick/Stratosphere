@@ -1,0 +1,10 @@
+{
+  "version": "1.0",
+  "defaultProvider": "unpkg",
+  "libraries": [
+    {
+      "library": "gridjs@6.2.0",
+      "destination": "lib\\gridjs"
+    }
+  ]
+}

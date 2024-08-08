@@ -31,6 +31,7 @@
     <Folder Include="Pages\Maintenance\ViewModels\" />
     <Folder Include="Pages\Maintenance\Partials\" />
     <Folder Include="Pages\Monitoring\Partials\" />
+    <Folder Include="wwwroot\js\Administration\Partials\" />
   </ItemGroup>
 
   <ItemGroup>
