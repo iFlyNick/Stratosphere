@@ -1,10 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Stratosphere.Data.Models;
 using Stratosphere.Pages.Administration.Services.Services;
 using Stratosphere.Pages.Administration.Services.ViewModels;
 using Stratosphere.Pages.Administration.ServiceTypes.Services;
-using Stratosphere.Pages.Administration.ServiceTypes.ViewModels;
 
 namespace Stratosphere.Pages.Administration.Services;
 

@@ -11,6 +11,7 @@
     //namespace public methods to be called from admin child pages
     window.Stratosphere.loadServicesDataGrid = loadServicesDataGrid;
     window.Stratosphere.loadServiceTypesDataGrid = loadServiceTypesDataGrid;
+    window.Stratosphere.loadEnvironmentsDataGrid = loadEnvironmentsDataGrid;
 
     function bindAdminSections() {
         $('.adminAreaButton').on('click', function () {
@@ -72,6 +73,21 @@
             };
 
             handleNewServiceSubmit(formData);
+        });
+    };
+
+    function addNewServiceListener() {
+        //submit button on the offcanvas
+        $('#newEnvironmentSubmit').on('click', function () {
+            var environmentName = $('#environmentModalName').val();
+            var environmentDescription = $('#environmentModalDescription').val();
+
+            var formData = {
+                name: environmentName,
+                description: environmentDescription
+            };
+
+            handleNewEnvironmentSubmit(formData);
         });
     };
 
@@ -148,6 +164,27 @@
             }
         });
     };
+
+    function handleNewEnvironmentSubmit(data) {
+        $.ajax({
+            type: 'POST',
+            url: `Administration/Environments/Index?handler=Environment`,
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            success: function (data) {
+                $('#adminCanvas').addClass('d-none');
+                clearOffcanvasForm();
+                refreshGrid($('#adminRefreshGridButton'));
+                successAlert("Successfully created Environment");
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    }
 
     function successAlert(message) {
         $('.adminHeaderRow').after(`<div class="alert alert-success alert-dismissible fade show" role="alert">${message}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`);
@@ -332,6 +369,60 @@
         }
 
         grid.on('ready', () => addRowButtons("Administration/ServiceTypes/Index?handler=ServiceType"));
+    };
+
+    function loadEnvironmentsDataGrid(data) {
+        console.log('load environments data grid fired');
+
+        var gridConfig = {
+            search: true,
+            pagination: {
+                limit: 25
+            },
+            sort: true,
+            autoWidth: false,
+            resizable: false,
+            width: '1100px',
+            columns: [
+                {
+                    name: "Name",
+                    width: '300px'
+                },
+                {
+                    name: "Description",
+                    width: '500px'
+                },
+                {
+                    name: "Actions",
+                    width: '125px'
+                }
+            ],
+            data: () => {
+                if (data === undefined || data === null) {
+                    return [];
+                };
+
+                var jsonData = data;
+
+                var jsonFormatted = jsonData.map(item => [
+                    item.name,
+                    item.description
+                ]);
+
+                return jsonFormatted;
+            }
+        };
+
+        if (grid === undefined) {
+            console.log('spinning up new grid');
+            grid = $("#mainDataTable").empty().Grid(gridConfig);
+        }
+        else {
+            console.log('rendering updated grid');
+            grid.updateConfig(gridConfig).forceRender();
+        }
+
+        grid.on('ready', () => addRowButtons("Administration/Environments/Index?handler=Environment"));
     };
 
     function buttonSpinnerHtml() {

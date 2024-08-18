@@ -7,16 +7,11 @@ using System.Text;
 
 namespace Stratosphere.Services.Queues;
 
-public class QueueApiService : IQueueApiService
+public class QueueApiService(ILogger<QueueApiService> logger, IHttpService httpService, IOptions<MessageQueueApiSettings> settings) : IQueueApiService
 {
-    private readonly IHttpService _httpService;
-    private readonly MessageQueueApiSettings _settings;
-
-    public QueueApiService(IHttpService httpService, IOptions<MessageQueueApiSettings> settings)
-    {
-        _httpService = httpService;
-        _settings = settings.Value;
-    }
+    private readonly ILogger<QueueApiService> _logger = logger;
+    private readonly IHttpService _httpService = httpService;
+    private readonly MessageQueueApiSettings _settings = settings.Value;
 
     public async Task<List<Queue>?> GetAllQueueInfo(bool minimizeResults)
     {

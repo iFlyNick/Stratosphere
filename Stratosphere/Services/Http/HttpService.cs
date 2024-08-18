@@ -2,14 +2,9 @@
 
 namespace Stratosphere.Services.Http;
 
-public class HttpService : IHttpService
+public class HttpService(ILogger<HttpService> logger, HttpClient httpClient) : IHttpService
 {
-    private readonly HttpClient _httpClient;
-    
-    public HttpService(HttpClient httpClient)
-    {
-        _httpClient = httpClient;
-    }
+    private readonly HttpClient _httpClient = httpClient;
 
     private void ConfigureClient(string? method, string? url, HttpContent? content, string? contentType, AuthenticationHeaderValue? authHeader, Dictionary<string, string>? headers)
     {

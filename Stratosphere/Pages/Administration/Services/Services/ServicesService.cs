@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Caching.Memory;
-using Stratosphere.Data.Models;
+﻿using Stratosphere.Data.Models;
 using Stratosphere.Pages.Administration.Data;
 using Stratosphere.Pages.Administration.Services.ViewModels;
 
@@ -25,6 +24,26 @@ public class ServicesService(ILogger<ServicesService> logger, IDbRepository dbRe
         return serviceVMs ?? [];
     }
 
+    public async Task<ServiceVM?> GetServiceByName(string? name)
+    {
+        if (string.IsNullOrEmpty(name))
+            return null;
+
+        var dbRecord = await _dbRepository.GetServiceByName(name);
+
+        if (dbRecord is null)
+            return null;
+
+        var retVal = new ServiceVM()
+        {
+            Name = dbRecord.Name,
+            Description = dbRecord.Description,
+            Type = dbRecord.ServiceType?.Name
+        };
+
+        return retVal;
+    }
+
     public async Task<int> CreateService(ServiceVM? service)
     {
         if (service is null)
@@ -44,9 +63,9 @@ public class ServicesService(ILogger<ServicesService> logger, IDbRepository dbRe
         return await _dbRepository.CreateService(dbVal);
     }
 
-    private List<ServiceVM>? MapServicesToViewModels(List<Service>? services)
+    private static List<ServiceVM>? MapServicesToViewModels(List<Service>? services)
     {
-        if (services is null || !services.Any())
+        if (services is null || services.Count == 0)
             return null;
 
         var retList = new List<ServiceVM>();

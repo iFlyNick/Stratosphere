@@ -6,6 +6,7 @@ using Stratosphere.Pages.Maintenance;
 using Stratosphere.Pages.Monitoring;
 using Stratosphere.Pages.Queues;
 using Stratosphere.Pages.Queues.Models;
+using Stratosphere.Services.Cache;
 using Stratosphere.Services.Http;
 using Stratosphere.Services.Queues;
 
@@ -33,6 +34,7 @@ builder.Services.AddHttpClient<IHttpService, HttpService>();
 
 builder.Services.Configure<MessageQueueApiSettings>(builder.Configuration.GetSection("MessageQueueApiSettings"));
 builder.Services.AddSingleton<IQueueApiService, QueueApiService>();
+builder.Services.AddSingleton<ICacheService, CacheService>();
 
 builder.Services.AddDbContext<StratosphereContext>(options =>
 {
