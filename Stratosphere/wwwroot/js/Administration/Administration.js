@@ -103,7 +103,7 @@
 
     function bindRefreshGridButton() {
         $('#adminRefreshGridButton').on('click', function () {
-            refreshGrid($(this));
+            refreshGrid($(this), true); //allow spinner to show loading status when user requests a refresh
         });
     };
 
@@ -334,10 +334,21 @@
         grid.on('ready', () => addRowButtons("Administration/ServiceTypes/Index?handler=ServiceType"));
     };
 
-    function refreshGrid(element) {
+    function buttonSpinnerHtml() {
+        return `<span class="spinner-border spinner-border-sm me-2" role="status"></span><span class="sr-only">Loading...</span>`;
+    }
+
+    function refreshGrid(element, allowSpinner) {
         //expect the url to call to be based on the id of the reload grid button parent element
         var target = element.parent().attr('id');
         var url = `Administration/${subpage}/Index?handler=${target}`;
+        $(element).attr('disabled', true);
+        var buttonHtml = $(element).html();
+
+        if (allowSpinner !== undefined || allowSpinner !== null) {
+            var replaceHtml = buttonSpinnerHtml();
+            $(element).html(replaceHtml);
+        }
 
         $.ajax({
             type: 'GET',
@@ -346,6 +357,12 @@
                 xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val());
             },
             success: function (data) {
+                if (allowSpinner !== undefined || allowSpinner !== null) {
+                    $(element).html(buttonHtml);
+                };
+
+                $(element).attr('disabled', false);
+
                 if (data.dataList === undefined) {
                     console.log('no data returned from refresh call');
                     return;
@@ -355,6 +372,12 @@
                 window.Stratosphere[method](data.dataList);
             },
             error: function (xhr, status, error) {
+                if (allowSpinner !== undefined || allowSpinner !== null) {
+                    $(element).html(buttonHtml);
+                };
+
+                $(element).attr('disabled', false);
+
                 console.error(xhr.responseText);
             }
         });
