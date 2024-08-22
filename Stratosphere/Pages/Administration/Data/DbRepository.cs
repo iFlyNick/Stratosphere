@@ -18,6 +18,7 @@ public class DbRepository(ILogger<DbRepository> logger, StratosphereContext dbCo
     private const string _serviceTypesCacheKey = "ServiceTypes";
     private const string _servicesCacheKey = "Services";
     private const string _environmentsCacheKey = "Environments";
+    private const string _assetTypesCacheKey = "AssetTypes";
 
     public async Task<List<ServiceType>?> GetAllServiceTypes()
     {
@@ -264,6 +265,90 @@ public class DbRepository(ILogger<DbRepository> logger, StratosphereContext dbCo
         _logger.LogDebug("Updating environments cache");
         var environments = await _dbContext.Environment.ToListAsync();
         _cacheService.RefreshCacheEntry(_environmentsCacheKey, environments);
+
+        return records;
+    }
+
+    public async Task<List<AssetType>?> GetAllAssetTypes()
+    {
+        var assetTypes = _cacheService.GetCacheEntry(_assetTypesCacheKey) as List<AssetType>;
+
+        if (assetTypes is not null)
+            return assetTypes;
+
+        var records = await _dbContext.AssetType.ToListAsync();
+
+        _logger.LogDebug("Retrieved {Count} asset types from the database", records.Count);
+
+        _cacheService.AddCacheEntry(_assetTypesCacheKey, records);
+
+        return records ?? [];
+    }
+
+    public async Task<AssetType?> GetAssetTypeByName(string? name)
+    {
+        if (string.IsNullOrEmpty(name))
+            return null;
+
+        var assetTypes = _cacheService.GetCacheEntry(_assetTypesCacheKey) as List<AssetType>;
+
+        if (assetTypes is not null)
+            return assetTypes.FirstOrDefault(x => x.Name == name);
+
+        var record = await _dbContext.AssetType.FirstOrDefaultAsync(x => x.Name == name);
+
+        return record;
+    }
+
+    public async Task<int> CreateAssetType(AssetType? assetType)
+    {
+        if (assetType is null)
+            return 0;
+
+        assetType.CreatedDate = DateTime.UtcNow;
+        assetType.CreatedBy = _defaultDbUser;
+
+        await _dbContext.AssetType.AddAsync(assetType);
+
+        var records = await _dbContext.SaveChangesAsync();
+
+        if (records == 0)
+        {
+            _logger.LogInformation("Failed to create asset type {assetType}", assetType.Name);
+            return records;
+        }
+
+        _logger.LogDebug("Updating asset types cache");
+        var assetTypes = await _dbContext.AssetType.ToListAsync();
+        _cacheService.RefreshCacheEntry(_assetTypesCacheKey, assetTypes);
+
+        return records;
+    }
+
+    public async Task<int> DeleteAssetTypeByName(string? name)
+    {
+        if (string.IsNullOrEmpty(name))
+            return 0;
+
+        var record = await _dbContext.AssetType.FirstOrDefaultAsync(x => x.Name == name);
+
+        if (record is null)
+            return 0;
+
+        _logger.LogInformation("Deleting asset type {name}", name);
+        _dbContext.AssetType.Remove(record);
+
+        var records = await _dbContext.SaveChangesAsync();
+
+        if (records == 0)
+        {
+            _logger.LogInformation("Failed to delete asset type {assetType}", record.Name);
+            return records;
+        }
+
+        _logger.LogDebug("Updating asset types cache");
+        var assetTypes = await _dbContext.AssetType.ToListAsync();
+        _cacheService.RefreshCacheEntry(_assetTypesCacheKey, assetTypes);
 
         return records;
     }

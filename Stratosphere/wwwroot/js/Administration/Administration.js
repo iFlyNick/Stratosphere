@@ -12,6 +12,7 @@
     window.Stratosphere.loadServicesDataGrid = loadServicesDataGrid;
     window.Stratosphere.loadServiceTypesDataGrid = loadServiceTypesDataGrid;
     window.Stratosphere.loadEnvironmentsDataGrid = loadEnvironmentsDataGrid;
+    window.Stratosphere.loadAssetTypesDataGrid = loadAssetTypesDataGrid;
 
     function bindAdminSections() {
         $('.adminAreaButton').on('click', function () {
@@ -76,7 +77,7 @@
         });
     };
 
-    function addNewServiceListener() {
+    function addNewEnvironmentListener() {
         //submit button on the offcanvas
         $('#newEnvironmentSubmit').on('click', function () {
             var environmentName = $('#environmentModalName').val();
@@ -91,9 +92,26 @@
         });
     };
 
+    function addNewAssetTypeListener() {
+        //submit button on the offcanvas
+        $('#newAssetTypeSubmit').on('click', function () {
+            var assetTypeName = $('#assetTypeModalName').val();
+            var assetTypeDescription = $('#assetTypeModalDescription').val();
+
+            var formData = {
+                name: assetTypeName,
+                description: assetTypeDescription
+            };
+
+            handleNewAssetTypeSubmit(formData);
+        });
+    };
+
     function addOffcanvasSubmitListeners() {
         addNewServiceTypeListener();
         addNewServiceListener();
+        addNewEnvironmentListener();
+        addNewAssetTypeListener();
     };
 
     function clearOffcanvasForm() {
@@ -184,7 +202,28 @@
                 console.error(xhr.responseText);
             }
         });
-    }
+    };
+
+    function handleNewAssetTypeSubmit(data) {
+        $.ajax({
+            type: 'POST',
+            url: `Administration/AssetTypes/Index?handler=AssetType`,
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            success: function (data) {
+                $('#adminCanvas').addClass('d-none');
+                clearOffcanvasForm();
+                refreshGrid($('#adminRefreshGridButton'));
+                successAlert("Successfully created Asset Type");
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    };
 
     function successAlert(message) {
         $('.adminHeaderRow').after(`<div class="alert alert-success alert-dismissible fade show" role="alert">${message}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`);
@@ -423,6 +462,60 @@
         }
 
         grid.on('ready', () => addRowButtons("Administration/Environments/Index?handler=Environment"));
+    };
+
+    function loadAssetTypesDataGrid(data) {
+        console.log('load asset types data grid fired');
+
+        var gridConfig = {
+            search: true,
+            pagination: {
+                limit: 25
+            },
+            sort: true,
+            autoWidth: false,
+            resizable: false,
+            width: '1100px',
+            columns: [
+                {
+                    name: "Name",
+                    width: '300px'
+                },
+                {
+                    name: "Description",
+                    width: '500px'
+                },
+                {
+                    name: "Actions",
+                    width: '125px'
+                }
+            ],
+            data: () => {
+                if (data === undefined || data === null) {
+                    return [];
+                };
+
+                var jsonData = data;
+
+                var jsonFormatted = jsonData.map(item => [
+                    item.name,
+                    item.description
+                ]);
+
+                return jsonFormatted;
+            }
+        };
+
+        if (grid === undefined) {
+            console.log('spinning up new grid');
+            grid = $("#mainDataTable").empty().Grid(gridConfig);
+        }
+        else {
+            console.log('rendering updated grid');
+            grid.updateConfig(gridConfig).forceRender();
+        }
+
+        grid.on('ready', () => addRowButtons("Administration/AssetTypes/Index?handler=AssetType"));
     };
 
     function buttonSpinnerHtml() {

@@ -19,4 +19,9 @@ public interface IDbRepository
     Task<Environment?> GetEnvironmentByName(string? name);
     Task<int> CreateEnvironment(Environment? environment);
     Task<int> DeleteEnvironmentByName(string? name);
+
+    Task<List<AssetType>?> GetAllAssetTypes();
+    Task<AssetType?> GetAssetTypeByName(string? name);
+    Task<int> CreateAssetType(AssetType? assetType);
+    Task<int> DeleteAssetTypeByName(string? name);
 }

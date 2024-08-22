@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Stratosphere.Pages.Administration.Environments.Services;
 using Stratosphere.Pages.Administration.Environments.ViewModels;
-using Stratosphere.Pages.Administration.Services.ViewModels;
 
 namespace Stratosphere.Pages.Administration.Environments;
 
@@ -52,7 +51,7 @@ public class IndexModel(ILogger<IndexModel> logger, IEnvironmentService service)
         return new JsonResult(new { success = true });
     }
 
-    public async Task<JsonResult> OnPutEnvironment([FromBody] ServiceVM environment)
+    public async Task<JsonResult> OnPutEnvironment([FromBody] EnvironmentVM environment)
     {
         _logger.LogInformation("Received environment put request. has object: {test}", environment is null ? "nope" : "yep");
 
