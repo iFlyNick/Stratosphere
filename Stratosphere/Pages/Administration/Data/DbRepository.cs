@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Caching.Memory;
 using Stratosphere.Data;
 using Stratosphere.Data.Models;
+using Stratosphere.Pages.Administration.AssetTypes.ViewModels;
 using Stratosphere.Services.Cache;
 using System;
 using Environment = Stratosphere.Data.Models.Environment;
@@ -19,6 +20,7 @@ public class DbRepository(ILogger<DbRepository> logger, StratosphereContext dbCo
     private const string _servicesCacheKey = "Services";
     private const string _environmentsCacheKey = "Environments";
     private const string _assetTypesCacheKey = "AssetTypes";
+    private const string _connectionProfilesCacheKey = "ConnectionProfiles";
 
     public async Task<List<ServiceType>?> GetAllServiceTypes()
     {
@@ -27,7 +29,7 @@ public class DbRepository(ILogger<DbRepository> logger, StratosphereContext dbCo
         if (serviceTypes is not null)
             return serviceTypes;
 
-        var records = await _dbContext.ServiceType.ToListAsync();
+        var records = await _dbContext.ServiceType.AsNoTracking().ToListAsync();
 
         _logger.LogDebug("Retrieved {Count} service types from the database", records.Count);
 
@@ -52,7 +54,7 @@ public class DbRepository(ILogger<DbRepository> logger, StratosphereContext dbCo
         }
 
         _logger.LogDebug("Updating service types cache");
-        var serviceTypes = await _dbContext.ServiceType.ToListAsync();
+        var serviceTypes = await _dbContext.ServiceType.AsNoTracking().ToListAsync();
         _cacheService.RefreshCacheEntry(_serviceTypesCacheKey, serviceTypes);
 
         return records;
@@ -68,7 +70,7 @@ public class DbRepository(ILogger<DbRepository> logger, StratosphereContext dbCo
         if (serviceTypes is not null)
             return serviceTypes.FirstOrDefault(x => x.Name == name);
 
-        var record = await _dbContext.ServiceType.FirstOrDefaultAsync(x => x.Name == name);
+        var record = await _dbContext.ServiceType.AsNoTracking().FirstOrDefaultAsync(x => x.Name == name);
 
         return record;
     }
@@ -95,7 +97,7 @@ public class DbRepository(ILogger<DbRepository> logger, StratosphereContext dbCo
         }
 
         _logger.LogDebug("Updating service types cache");
-        var serviceTypes = await _dbContext.ServiceType.ToListAsync();
+        var serviceTypes = await _dbContext.ServiceType.AsNoTracking().ToListAsync();
         _cacheService.RefreshCacheEntry(_serviceTypesCacheKey, serviceTypes);
 
         return records;
@@ -108,7 +110,7 @@ public class DbRepository(ILogger<DbRepository> logger, StratosphereContext dbCo
         if (services is not null)
                 return services;
 
-        var records = await _dbContext.Service.Include(s => s.ServiceType).ToListAsync();
+        var records = await _dbContext.Service.AsNoTracking().Include(s => s.ServiceType).ToListAsync();
 
         _logger.LogDebug("Retrieved {Count} services from the database", records.Count);
 
@@ -125,6 +127,10 @@ public class DbRepository(ILogger<DbRepository> logger, StratosphereContext dbCo
         service.CreatedDate = DateTime.UtcNow;
         service.CreatedBy = _defaultDbUser;
 
+        //value is cached above this layer so need to force add it for ef to not try and re-insert it
+        if (service.ServiceType is not null)
+            _dbContext.ServiceType.Attach(service.ServiceType);
+
         await _dbContext.Service.AddAsync(service);
 
         var records = await _dbContext.SaveChangesAsync();
@@ -136,7 +142,7 @@ public class DbRepository(ILogger<DbRepository> logger, StratosphereContext dbCo
         }
 
         _logger.LogDebug("Updating services cache");
-        var services = await _dbContext.Service.ToListAsync();
+        var services = await _dbContext.Service.AsNoTracking().ToListAsync();
         _cacheService.RefreshCacheEntry(_servicesCacheKey, services);
 
         return records;
@@ -152,7 +158,7 @@ public class DbRepository(ILogger<DbRepository> logger, StratosphereContext dbCo
         if (services is not null)
             return services.FirstOrDefault(x => x.Name == name);
 
-        var record = await _dbContext.Service.FirstOrDefaultAsync(x => x.Name == name);
+        var record = await _dbContext.Service.AsNoTracking().FirstOrDefaultAsync(x => x.Name == name);
 
         return record;
     }
@@ -179,7 +185,7 @@ public class DbRepository(ILogger<DbRepository> logger, StratosphereContext dbCo
         }
 
         _logger.LogDebug("Updating services cache");
-        var services = await _dbContext.Service.ToListAsync();
+        var services = await _dbContext.Service.AsNoTracking().ToListAsync();
         _cacheService.RefreshCacheEntry(_servicesCacheKey, services);
 
         return records;
@@ -192,7 +198,7 @@ public class DbRepository(ILogger<DbRepository> logger, StratosphereContext dbCo
         if (environments is not null)
             return environments;
 
-        var records = await _dbContext.Environment.ToListAsync();
+        var records = await _dbContext.Environment.AsNoTracking().ToListAsync();
 
         _logger.LogDebug("Retrieved {Count} environments from the database", records.Count);
 
@@ -211,7 +217,7 @@ public class DbRepository(ILogger<DbRepository> logger, StratosphereContext dbCo
         if (environments is not null)
             return environments.FirstOrDefault(x => x.Name == name);
 
-        var record = await _dbContext.Environment.FirstOrDefaultAsync(x => x.Name == name);
+        var record = await _dbContext.Environment.AsNoTracking().FirstOrDefaultAsync(x => x.Name == name);
 
         return record;
     }
@@ -235,7 +241,7 @@ public class DbRepository(ILogger<DbRepository> logger, StratosphereContext dbCo
         }
 
         _logger.LogDebug("Updating environments cache");
-        var environments = await _dbContext.Environment.ToListAsync();
+        var environments = await _dbContext.Environment.AsNoTracking().ToListAsync();
         _cacheService.RefreshCacheEntry(_environmentsCacheKey, environments);
 
         return records;
@@ -263,7 +269,7 @@ public class DbRepository(ILogger<DbRepository> logger, StratosphereContext dbCo
         }
 
         _logger.LogDebug("Updating environments cache");
-        var environments = await _dbContext.Environment.ToListAsync();
+        var environments = await _dbContext.Environment.AsNoTracking().ToListAsync();
         _cacheService.RefreshCacheEntry(_environmentsCacheKey, environments);
 
         return records;
@@ -276,7 +282,7 @@ public class DbRepository(ILogger<DbRepository> logger, StratosphereContext dbCo
         if (assetTypes is not null)
             return assetTypes;
 
-        var records = await _dbContext.AssetType.ToListAsync();
+        var records = await _dbContext.AssetType.AsNoTracking().ToListAsync();
 
         _logger.LogDebug("Retrieved {Count} asset types from the database", records.Count);
 
@@ -295,7 +301,7 @@ public class DbRepository(ILogger<DbRepository> logger, StratosphereContext dbCo
         if (assetTypes is not null)
             return assetTypes.FirstOrDefault(x => x.Name == name);
 
-        var record = await _dbContext.AssetType.FirstOrDefaultAsync(x => x.Name == name);
+        var record = await _dbContext.AssetType.AsNoTracking().FirstOrDefaultAsync(x => x.Name == name);
 
         return record;
     }
@@ -319,7 +325,7 @@ public class DbRepository(ILogger<DbRepository> logger, StratosphereContext dbCo
         }
 
         _logger.LogDebug("Updating asset types cache");
-        var assetTypes = await _dbContext.AssetType.ToListAsync();
+        var assetTypes = await _dbContext.AssetType.AsNoTracking().ToListAsync();
         _cacheService.RefreshCacheEntry(_assetTypesCacheKey, assetTypes);
 
         return records;
@@ -347,8 +353,92 @@ public class DbRepository(ILogger<DbRepository> logger, StratosphereContext dbCo
         }
 
         _logger.LogDebug("Updating asset types cache");
-        var assetTypes = await _dbContext.AssetType.ToListAsync();
+        var assetTypes = await _dbContext.AssetType.AsNoTracking().ToListAsync();
         _cacheService.RefreshCacheEntry(_assetTypesCacheKey, assetTypes);
+
+        return records;
+    }
+
+    public async Task<List<ConnectionProfile>?> GetAllConnectionProfiles()
+    {
+        var connectionProfiles = _cacheService.GetCacheEntry(_connectionProfilesCacheKey) as List<ConnectionProfile>;
+
+        if (connectionProfiles is not null)
+            return connectionProfiles;
+
+        var records = await _dbContext.ConnectionProfile.AsNoTracking().ToListAsync();
+
+        _logger.LogDebug("Retrieved {Count} connection profiles from the database", records.Count);
+
+        _cacheService.AddCacheEntry(_connectionProfilesCacheKey, records);
+
+        return records ?? [];
+    }
+
+    public async Task<ConnectionProfile?> GetConnectionProfileByName(string? name)
+    {
+        if (string.IsNullOrEmpty(name))
+            return null;
+
+        var connectionProfiles = _cacheService.GetCacheEntry(_connectionProfilesCacheKey) as List<ConnectionProfile>;
+
+        if (connectionProfiles is not null)
+            return connectionProfiles.FirstOrDefault(x => x.Name == name);
+
+        var record = await _dbContext.ConnectionProfile.AsNoTracking().FirstOrDefaultAsync(x => x.Name == name);
+
+        return record;
+    }
+
+    public async Task<int> CreateConnectionProfile(ConnectionProfile? connectionProfile)
+    {
+        if (connectionProfile is null)
+            return 0;
+
+        connectionProfile.CreatedDate = DateTime.UtcNow;
+        connectionProfile.CreatedBy = _defaultDbUser;
+
+        await _dbContext.ConnectionProfile.AddAsync(connectionProfile);
+
+        var records = await _dbContext.SaveChangesAsync();
+
+        if (records == 0)
+        {
+            _logger.LogInformation("Failed to create connection profile {connectionProfile}", connectionProfile.Name);
+            return records;
+        }
+
+        _logger.LogDebug("Updating connection profiles cache");
+        var connectionProfiles = await _dbContext.ConnectionProfile.AsNoTracking().ToListAsync();
+        _cacheService.RefreshCacheEntry(_connectionProfilesCacheKey, connectionProfiles);
+
+        return records;
+    }
+
+    public async Task<int> DeleteConnectionProfileByName(string? name)
+    {
+        if (string.IsNullOrEmpty(name))
+            return 0;
+
+        var record = await _dbContext.ConnectionProfile.FirstOrDefaultAsync(x => x.Name == name);
+
+        if (record is null)
+            return 0;
+
+        _logger.LogInformation("Deleting connection profile {name}", name);
+        _dbContext.ConnectionProfile.Remove(record);
+
+        var records = await _dbContext.SaveChangesAsync();
+
+        if (records == 0)
+        {
+            _logger.LogInformation("Failed to delete connection profile {connectionProfile}", record.Name);
+            return records;
+        }
+
+        _logger.LogDebug("Updating connection profiles cache");
+        var connectionProfiles = await _dbContext.ConnectionProfile.AsNoTracking().ToListAsync();
+        _cacheService.RefreshCacheEntry(_connectionProfilesCacheKey, connectionProfiles);
 
         return records;
     }

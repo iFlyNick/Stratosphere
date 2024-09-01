@@ -24,4 +24,9 @@ public interface IDbRepository
     Task<AssetType?> GetAssetTypeByName(string? name);
     Task<int> CreateAssetType(AssetType? assetType);
     Task<int> DeleteAssetTypeByName(string? name);
+
+    Task<List<ConnectionProfile>?> GetAllConnectionProfiles();
+    Task<ConnectionProfile?> GetConnectionProfileByName(string? name);
+    Task<int> CreateConnectionProfile(ConnectionProfile? connectionProfile);
+    Task<int> DeleteConnectionProfileByName(string? name);
 }

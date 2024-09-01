@@ -15,6 +15,11 @@ public class Asset
     [Required] public string? Name { get; set; }
     public string? Description { get; set; }
     [Required] public string? ConnectionString { get; set; }
+    [Required] public Guid? ConnectionProfileId { get; set; }
+
+
+    [Required] public AssetType? AssetType { get; set; }
+    [Required] public ConnectionProfile? ConnectionProfile { get; set; }
 }
 
 public class AssetConfiguration : IEntityTypeConfiguration<Asset>

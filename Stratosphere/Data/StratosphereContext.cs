@@ -11,6 +11,7 @@ public class StratosphereContext(DbContextOptions<StratosphereContext> options) 
     public DbSet<AlertProfileDetail> AlertProfileDetail { get; set; }
     public DbSet<Asset> Asset { get; set; }
     public DbSet<AssetType> AssetType { get; set; }
+    public DbSet<ConnectionProfile> ConnectionProfile { get; set; }
     public DbSet<Contact> Contact { get; set; }
     public DbSet<ContactType> ContactType { get; set; }
     public DbSet<Models.Environment> Environment { get; set; }

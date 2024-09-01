@@ -1,6 +1,7 @@
 ﻿using Stratosphere.Pages.Administration.Alarms.Services;
 using Stratosphere.Pages.Administration.Assets.Services;
 using Stratosphere.Pages.Administration.AssetTypes.Services;
+using Stratosphere.Pages.Administration.ConnectionProfiles.Services;
 using Stratosphere.Pages.Administration.Contacts.Services;
 using Stratosphere.Pages.Administration.Data;
 using Stratosphere.Pages.Administration.Environments.Services;
@@ -20,6 +21,7 @@ public static class Startup
         services.AddScoped<IAlarmService, AlarmService>();
         services.AddScoped<IAssetService, AssetService>();
         services.AddScoped<IAssetTypeService, AssetTypeService>();
+        services.AddScoped<IConnectionProfileService, ConnectionProfileService>();
         services.AddScoped<IContactService, ContactService>();
         services.AddScoped<IEnvironmentService, EnvironmentService>();
         services.AddScoped<IQueueAdminService, QueueAdminService>();

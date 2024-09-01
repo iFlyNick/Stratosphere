@@ -13,6 +13,7 @@
     window.Stratosphere.loadServiceTypesDataGrid = loadServiceTypesDataGrid;
     window.Stratosphere.loadEnvironmentsDataGrid = loadEnvironmentsDataGrid;
     window.Stratosphere.loadAssetTypesDataGrid = loadAssetTypesDataGrid;
+    window.Stratosphere.loadConnectionProfilesDataGrid = loadConnectionProfilesDataGrid;
 
     function bindAdminSections() {
         $('.adminAreaButton').on('click', function () {
@@ -107,11 +108,29 @@
         });
     };
 
+    function addNewConnectionProfileListener() {
+        //submit button on the offcanvas
+        $('#newConnectionProfileSubmit').on('click', function () {
+            var connectionProfileName = $('#connectionProfileName').val();
+            var connectionProfileUserName = $('#connectionProfileUserName').val();
+            var connectionProfilePassword = $('#connectionProfilePassword').val();
+
+            var formData = {
+                name: connectionProfileName,
+                username: connectionProfileUserName,
+                password: connectionProfilePassword
+            };
+
+            handleNewConnectionProfileSubmit(formData);
+        });
+    };
+
     function addOffcanvasSubmitListeners() {
         addNewServiceTypeListener();
         addNewServiceListener();
         addNewEnvironmentListener();
         addNewAssetTypeListener();
+        addNewConnectionProfileListener();
     };
 
     function clearOffcanvasForm() {
@@ -218,6 +237,27 @@
                 clearOffcanvasForm();
                 refreshGrid($('#adminRefreshGridButton'));
                 successAlert("Successfully created Asset Type");
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    };
+
+    function handleNewConnectionProfileSubmit(data) {
+        $.ajax({
+            type: 'POST',
+            url: `Administration/ConnectionProfiles/Index?handler=ConnectionProfile`,
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            success: function (data) {
+                $('#adminCanvas').addClass('d-none');
+                clearOffcanvasForm();
+                refreshGrid($('#adminRefreshGridButton'));
+                successAlert("Successfully created Connection Profile");
             },
             error: function (xhr, status, error) {
                 console.error(xhr.responseText);
@@ -516,6 +556,65 @@
         }
 
         grid.on('ready', () => addRowButtons("Administration/AssetTypes/Index?handler=AssetType"));
+    };
+
+    function loadConnectionProfilesDataGrid(data) {
+        console.log('load connection profile data grid fired');
+
+        var gridConfig = {
+            search: true,
+            pagination: {
+                limit: 25
+            },
+            sort: true,
+            autoWidth: false,
+            resizable: false,
+            width: '1100px',
+            columns: [
+                {
+                    name: "Name",
+                    width: '300px'
+                },
+                {
+                    name: "Username",
+                    width: '150px'
+                },
+                {
+                    name: "Password",
+                    width: '150px'
+                },
+                {
+                    name: "Actions",
+                    width: '125px'
+                }
+            ],
+            data: () => {
+                if (data === undefined || data === null) {
+                    return [];
+                };
+
+                var jsonData = data;
+
+                var jsonFormatted = jsonData.map(item => [
+                    item.name,
+                    item.username,
+                    item.password
+                ]);
+
+                return jsonFormatted;
+            }
+        };
+
+        if (grid === undefined) {
+            console.log('spinning up new grid');
+            grid = $("#mainDataTable").empty().Grid(gridConfig);
+        }
+        else {
+            console.log('rendering updated grid');
+            grid.updateConfig(gridConfig).forceRender();
+        }
+
+        grid.on('ready', () => addRowButtons("Administration/ConnectionProfiles/Index?handler=ConnectionProfile"));
     };
 
     function buttonSpinnerHtml() {

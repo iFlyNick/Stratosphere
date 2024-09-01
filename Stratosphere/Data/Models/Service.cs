@@ -22,8 +22,6 @@ public class ServiceConfiguration : IEntityTypeConfiguration<Service>
 {
     public void Configure(EntityTypeBuilder<Service> builder)
     {
-        builder.HasOne(s => s.ServiceType)
-            .WithMany(st => st.Services)
-            .HasForeignKey(s => s.ServiceTypeId);
+
     }
 }
