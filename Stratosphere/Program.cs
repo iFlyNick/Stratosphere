@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using Stratosphere;
 using Stratosphere.Data;
+using Stratosphere.Identity;
 using Stratosphere.Pages.Administration;
 using Stratosphere.Pages.Maintenance;
 using Stratosphere.Pages.Monitoring;
@@ -44,10 +46,14 @@ builder.Services.AddDbContext<StratosphereContext>(options =>
 });
 
 //add services for each page using extension methods
+builder.Services.AddMiddlewareServices();
 builder.Services.AddAdministrationServices();
 builder.Services.AddMaintenanceServices();
 builder.Services.AddMonitoringServices();
 builder.Services.AddQueueServices();
+
+//add openid connect from azure b2c
+builder.Services.AddOpenIdConnect(builder.Configuration);
 
 builder.Services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
 
@@ -64,8 +70,11 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+app.UseCookiePolicy();
 app.UseRouting();
 
+app.UseAuthentication();
+app.UseMiddleware<StratosphereMiddleware>();
 app.UseAuthorization();
 
 app.MapRazorPages();

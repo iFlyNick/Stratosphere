@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Caching.Memory;
@@ -11,5 +14,10 @@ public class IndexModel(ILogger<IndexModel> logger, IMemoryCache cache) : PageMo
     public async Task<IActionResult> OnGet(CancellationToken cancellationToken)
     {
         return Page();
+    }
+
+    public IActionResult OnGetSignOut()
+    {
+        return SignOut(new AuthenticationProperties { RedirectUri = "/" }, CookieAuthenticationDefaults.AuthenticationScheme, OpenIdConnectDefaults.AuthenticationScheme);
     }
 }

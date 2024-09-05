@@ -1,3 +1,5 @@
-﻿@using Stratosphere
+﻿@using Microsoft.AspNetCore.Authorization
+@using Stratosphere
 @namespace Stratosphere.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@attribute [Authorize]

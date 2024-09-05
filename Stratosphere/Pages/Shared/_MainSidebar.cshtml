@@ -41,7 +41,9 @@
     </div>
     <div id="sidebarUserButtons" class="row align-content-end w-100 m-0 p-0 h-40">
         <div id="userLogout" class="col-sm-6 mb-2">
-            <span class="d-flex justify-content-center hoverPointer"><i class="bi bi-box-arrow-left mx-1"></i>Logout</span>
+            <a asp-page="/Index" asp-page-handler="SignOut" class="d-flex text-decoration-none text-reset justify-content-center hoverPointer">
+                <span><i class="bi bi-box-arrow-left mx-1"></i>Logout</span>
+            </a>
         </div>
         <div id="userNotifications" class="col-sm-3 mb-2">
             <span class="hoverPointer"><i class="bi bi-bell-fill"></i></span>
