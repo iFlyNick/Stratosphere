@@ -1,32 +1,32 @@
 ﻿using Stratosphere.Data.Models;
-using Environment = Stratosphere.Data.Models.Environment;
+using EnvironmentDto = Stratosphere.Data.Models.EnvironmentDto;
 
 namespace Stratosphere.Pages.Administration.Data;
 
 public interface IDbRepository
 {
-    Task<List<ServiceType>?> GetAllServiceTypes();
-    Task<ServiceType?> GetServiceTypeByName(string? name);
-    Task<int> CreateServiceType(ServiceType serviceType);
+    Task<List<ServiceTypeDto>?> GetAllServiceTypes();
+    Task<ServiceTypeDto?> GetServiceTypeByName(string? name);
+    Task<int> CreateServiceType(ServiceTypeDto serviceType);
     Task<int> DeleteServiceTypeByName(string? name);
 
-    Task<List<Service>> GetAllServices();
-    Task<Service?> GetServiceByName(string? name);
-    Task<int> CreateService(Service? service);
+    Task<List<ServiceDto>> GetAllServices();
+    Task<ServiceDto?> GetServiceByName(string? name);
+    Task<int> CreateService(ServiceDto? service);
     Task<int> DeleteServiceByName(string? name);
 
-    Task<List<Environment>?> GetAllEnvironments();
-    Task<Environment?> GetEnvironmentByName(string? name);
-    Task<int> CreateEnvironment(Environment? environment);
+    Task<List<EnvironmentDto>?> GetAllEnvironments();
+    Task<EnvironmentDto?> GetEnvironmentByName(string? name);
+    Task<int> CreateEnvironment(EnvironmentDto? environment);
     Task<int> DeleteEnvironmentByName(string? name);
 
-    Task<List<AssetType>?> GetAllAssetTypes();
-    Task<AssetType?> GetAssetTypeByName(string? name);
-    Task<int> CreateAssetType(AssetType? assetType);
+    Task<List<AssetTypeDto>?> GetAllAssetTypes();
+    Task<AssetTypeDto?> GetAssetTypeByName(string? name);
+    Task<int> CreateAssetType(AssetTypeDto? assetType);
     Task<int> DeleteAssetTypeByName(string? name);
 
-    Task<List<ConnectionProfile>?> GetAllConnectionProfiles();
-    Task<ConnectionProfile?> GetConnectionProfileByName(string? name);
-    Task<int> CreateConnectionProfile(ConnectionProfile? connectionProfile);
+    Task<List<ConnectionProfileDto>?> GetAllConnectionProfiles();
+    Task<ConnectionProfileDto?> GetConnectionProfileByName(string? name);
+    Task<int> CreateConnectionProfile(ConnectionProfileDto? connectionProfile);
     Task<int> DeleteConnectionProfileByName(string? name);
 }

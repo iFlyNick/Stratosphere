@@ -12,11 +12,12 @@ public class IndexModel(ILogger<IndexModel> logger, IQueueAdminService service) 
 
     public async Task<IActionResult> OnGetQueues()
     {
-        var queuesVM = new QueuesVM()
-        {
-            Queues = await _service.GetQueues()
-        };
+        return Partial("Partials/_QueuePartial", null);
+        //var queueProvidersVM = new QueueProvidersVM()
+        //{
+        //    QueueProviders = await _service.GetQueues()
+        //};
 
-        return Partial("Partials/_QueuePartial", queuesVM);
+        //return Partial("Partials/_QueuePartial", queuesVM);
     }
 }

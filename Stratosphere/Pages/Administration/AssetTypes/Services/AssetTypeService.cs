@@ -21,7 +21,7 @@ public class AssetTypeService(ILogger<AssetTypeService> logger, IDbRepository db
         return retVal;
     }
 
-    private static List<AssetTypeVM>? ConvertToAssetTypeVM(List<AssetType>? assetTypes)
+    private static List<AssetTypeVM>? ConvertToAssetTypeVM(List<AssetTypeDto>? assetTypes)
     {
         if (assetTypes is null || assetTypes.Count == 0)
             return null;
@@ -41,7 +41,7 @@ public class AssetTypeService(ILogger<AssetTypeService> logger, IDbRepository db
         return retVal;
     }
 
-    private static AssetTypeVM? ConvertToAssetTypeVM(AssetType? assetType)
+    private static AssetTypeVM? ConvertToAssetTypeVM(AssetTypeDto? assetType)
     {
         if (assetType is null)
             return null;
@@ -70,7 +70,7 @@ public class AssetTypeService(ILogger<AssetTypeService> logger, IDbRepository db
         if (assetType is null)
             return 0;
 
-        var dbVal = new AssetType()
+        var dbVal = new AssetTypeDto()
         {
             AssetTypeId = Guid.NewGuid(),
             Name = assetType.Name,

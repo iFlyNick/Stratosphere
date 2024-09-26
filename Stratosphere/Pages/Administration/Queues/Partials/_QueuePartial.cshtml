@@ -1,8 +1,9 @@
 ﻿@using Stratosphere.Pages.Administration.Queues.ViewModels;
-@model QueuesVM
+@model QueueProvidersVM
 @{
     var pageType = "Queues";
-    var pageTypeSingle = "Queue";
+    var pageTypeSingle = "Queue Provider";
+    var refreshGridHelper = "QueueProvidersData";
 }
 
 <div class="d-flex row w-100 align-items-start">
@@ -10,13 +11,18 @@
         <div class="d-flex col-6 justify-content-start">
             <h1>@pageType</h1>
         </div>
-        <div class="d-flex col-6 justify-content-end">
-            <button type="button" class="btn btn-primary adminCreateButton" data-bs-toggle="modal" data-bs-target="#createModal">
+        <div id="@refreshGridHelper" class="d-flex col-6 justify-content-end">
+            <button type="button" id="adminRefreshGridButton" class="btn btn-secondary adminHeaderButton me-3 loadingEligible">
+                <span><i class="bi bi-arrow-clockwise me-2"></i>Refresh Grid</span>
+            </button>
+            <button type="button" id="adminCreateButton" class="btn btn-primary adminHeaderButton" data-bs-toggle="offcanvas" data-bs-target="#adminCanvas">
                 <span><i class="bi bi-plus-square me-2"></i>Add @pageTypeSingle</span>
             </button>
         </div>
     </div>
 
-    <div class="content h-90">
+    <div class="overflow-auto h-90">
+        <div id="mainDataTable">
+        </div>
     </div>
 </div>

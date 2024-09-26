@@ -39,10 +39,12 @@ builder.Services.AddSingleton<IQueueApiService, QueueApiService>();
 builder.Services.AddSingleton<ICacheService, CacheService>();
 
 builder.Services.AddDbContext<StratosphereContext>(options =>
-{
-    options.UseNpgsql(builder.Configuration.GetConnectionString("Postgres"))
-        .UseSnakeCaseNamingConvention()
-        .EnableSensitiveDataLogging();
+{   
+    options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")).EnableSensitiveDataLogging();
+
+    //options.UseNpgsql(builder.Configuration.GetConnectionString("Postgres"))
+    //    .UseSnakeCaseNamingConvention()
+    //    .EnableSensitiveDataLogging();
 });
 
 //add services for each page using extension methods
@@ -78,17 +80,5 @@ app.UseMiddleware<StratosphereMiddleware>();
 app.UseAuthorization();
 
 app.MapRazorPages();
-
-//lol, figure out migrations instead of this
-using (var scope = app.Services.CreateScope())
-{
-    var ctx = scope.ServiceProvider.GetRequiredService<StratosphereContext>();
-    var recreateDb = false;
-    if (recreateDb)
-    {
-        await ctx.Database.EnsureDeletedAsync();
-        await ctx.Database.EnsureCreatedAsync();
-    }
-}
 
 app.Run();

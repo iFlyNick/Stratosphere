@@ -1,6 +1,11 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity;
+@{
     var names = new List<string> { "User One", "User Two" };
     var randInt = new Random().Next(0, names.Count);
+    var firstName = User.Claims.FirstOrDefault(s => s.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname")?.Value;
+    var lastName = User.Claims.FirstOrDefault(s => s.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname")?.Value;
+
+    var userName = $"{firstName} {lastName}";
 }
 
 @*no extra div to hold both as it's referenced in a div a level above this*@
@@ -37,7 +42,7 @@
 
 <div class="sidebarUserContainer d-flex flex-column">
     <div id="sidebarUser" class="row w-100 m-0 p-0 h-60 text-center">
-        <span class="d-flex align-items-center justify-content-center h-100"><i class="bi bi-person-fill pe-2"></i>@names.ElementAt(randInt)</span>
+        <span class="d-flex align-items-center justify-content-center h-100"><i class="bi bi-person-fill pe-2"></i>@userName</span>
     </div>
     <div id="sidebarUserButtons" class="row align-content-end w-100 m-0 p-0 h-40">
         <div id="userLogout" class="col-sm-6 mb-2">

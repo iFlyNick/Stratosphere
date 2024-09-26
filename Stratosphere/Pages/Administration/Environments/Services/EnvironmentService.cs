@@ -1,6 +1,6 @@
 ﻿using Stratosphere.Pages.Administration.Data;
 using Stratosphere.Pages.Administration.Environments.ViewModels;
-using Environment = Stratosphere.Data.Models.Environment;
+using EnvironmentDto = Stratosphere.Data.Models.EnvironmentDto;
 
 namespace Stratosphere.Pages.Administration.Environments.Services;
 
@@ -21,7 +21,7 @@ public class EnvironmentService(ILogger<EnvironmentService> logger, IDbRepositor
         return retVal;
     }
 
-    private static List<EnvironmentVM>? ConvertToEnvironmentVM(List<Environment>? environments)
+    private static List<EnvironmentVM>? ConvertToEnvironmentVM(List<EnvironmentDto>? environments)
     {
         if (environments is null || environments.Count == 0)
             return null;
@@ -48,7 +48,7 @@ public class EnvironmentService(ILogger<EnvironmentService> logger, IDbRepositor
         return retVal;
     }
 
-    public async Task<Environment?> GetEnvironmentByName(string? name)
+    public async Task<EnvironmentDto?> GetEnvironmentByName(string? name)
     {
         if (string.IsNullOrEmpty(name))
             return null;
@@ -61,7 +61,7 @@ public class EnvironmentService(ILogger<EnvironmentService> logger, IDbRepositor
         if (environment is null)
             return 0;
 
-        var dbVal = new Environment()
+        var dbVal = new EnvironmentDto()
         {
             EnvironmentId = Guid.NewGuid(),
             Name = environment.Name,

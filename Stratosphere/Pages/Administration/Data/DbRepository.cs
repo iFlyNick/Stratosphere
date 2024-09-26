@@ -1,11 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
 using Stratosphere.Data;
 using Stratosphere.Data.Models;
-using Stratosphere.Pages.Administration.AssetTypes.ViewModels;
 using Stratosphere.Services.Cache;
-using System;
-using Environment = Stratosphere.Data.Models.Environment;
 
 namespace Stratosphere.Pages.Administration.Data;
 
@@ -22,9 +18,9 @@ public class DbRepository(ILogger<DbRepository> logger, StratosphereContext dbCo
     private const string _assetTypesCacheKey = "AssetTypes";
     private const string _connectionProfilesCacheKey = "ConnectionProfiles";
 
-    public async Task<List<ServiceType>?> GetAllServiceTypes()
+    public async Task<List<ServiceTypeDto>?> GetAllServiceTypes()
     {
-        var serviceTypes = _cacheService.GetCacheEntry(_serviceTypesCacheKey) as List<ServiceType>;
+        var serviceTypes = _cacheService.GetCacheEntry(_serviceTypesCacheKey) as List<ServiceTypeDto>;
 
         if (serviceTypes is not null)
             return serviceTypes;
@@ -38,7 +34,7 @@ public class DbRepository(ILogger<DbRepository> logger, StratosphereContext dbCo
         return records ?? [];
     }
 
-    public async Task<int> CreateServiceType(ServiceType serviceType)
+    public async Task<int> CreateServiceType(ServiceTypeDto serviceType)
     {
         serviceType.CreatedDate = DateTime.UtcNow;
         serviceType.CreatedBy = _defaultDbUser;
@@ -60,12 +56,12 @@ public class DbRepository(ILogger<DbRepository> logger, StratosphereContext dbCo
         return records;
     }
 
-    public async Task<ServiceType?> GetServiceTypeByName(string? name)
+    public async Task<ServiceTypeDto?> GetServiceTypeByName(string? name)
     {
         if (string.IsNullOrEmpty(name))
             return null;
 
-        var serviceTypes = _cacheService.GetCacheEntry(_serviceTypesCacheKey) as List<ServiceType>;
+        var serviceTypes = _cacheService.GetCacheEntry(_serviceTypesCacheKey) as List<ServiceTypeDto>;
 
         if (serviceTypes is not null)
             return serviceTypes.FirstOrDefault(x => x.Name == name);
@@ -103,9 +99,9 @@ public class DbRepository(ILogger<DbRepository> logger, StratosphereContext dbCo
         return records;
     }
 
-    public async Task<List<Service>> GetAllServices()
+    public async Task<List<ServiceDto>> GetAllServices()
     {
-        var services = _cacheService.GetCacheEntry(_servicesCacheKey) as List<Service>;
+        var services = _cacheService.GetCacheEntry(_servicesCacheKey) as List<ServiceDto>;
 
         if (services is not null)
                 return services;
@@ -119,7 +115,7 @@ public class DbRepository(ILogger<DbRepository> logger, StratosphereContext dbCo
         return records ?? [];
     }
 
-    public async Task<int> CreateService(Service? service)
+    public async Task<int> CreateService(ServiceDto? service)
     {
         if (service is null)
             return 0;
@@ -148,12 +144,12 @@ public class DbRepository(ILogger<DbRepository> logger, StratosphereContext dbCo
         return records;
     }
 
-    public async Task<Service?> GetServiceByName(string? name)
+    public async Task<ServiceDto?> GetServiceByName(string? name)
     {
         if (string.IsNullOrEmpty(name))
             return null;
 
-        var services = _cacheService.GetCacheEntry(_servicesCacheKey) as List<Service>;
+        var services = _cacheService.GetCacheEntry(_servicesCacheKey) as List<ServiceDto>;
 
         if (services is not null)
             return services.FirstOrDefault(x => x.Name == name);
@@ -191,9 +187,9 @@ public class DbRepository(ILogger<DbRepository> logger, StratosphereContext dbCo
         return records;
     }
 
-    public async Task<List<Environment>?> GetAllEnvironments()
+    public async Task<List<EnvironmentDto>?> GetAllEnvironments()
     {
-        var environments = _cacheService.GetCacheEntry(_environmentsCacheKey) as List<Environment>;
+        var environments = _cacheService.GetCacheEntry(_environmentsCacheKey) as List<EnvironmentDto>;
 
         if (environments is not null)
             return environments;
@@ -207,12 +203,12 @@ public class DbRepository(ILogger<DbRepository> logger, StratosphereContext dbCo
         return records ?? [];
     }
 
-    public async Task<Environment?> GetEnvironmentByName(string? name)
+    public async Task<EnvironmentDto?> GetEnvironmentByName(string? name)
     {
         if (string.IsNullOrEmpty(name))
             return null;
 
-        var environments = _cacheService.GetCacheEntry(_environmentsCacheKey) as List<Environment>;
+        var environments = _cacheService.GetCacheEntry(_environmentsCacheKey) as List<EnvironmentDto>;
 
         if (environments is not null)
             return environments.FirstOrDefault(x => x.Name == name);
@@ -222,7 +218,7 @@ public class DbRepository(ILogger<DbRepository> logger, StratosphereContext dbCo
         return record;
     }
 
-    public async Task<int> CreateEnvironment(Environment? environment)
+    public async Task<int> CreateEnvironment(EnvironmentDto? environment)
     {
         if (environment is null)
             return 0;
@@ -275,9 +271,9 @@ public class DbRepository(ILogger<DbRepository> logger, StratosphereContext dbCo
         return records;
     }
 
-    public async Task<List<AssetType>?> GetAllAssetTypes()
+    public async Task<List<AssetTypeDto>?> GetAllAssetTypes()
     {
-        var assetTypes = _cacheService.GetCacheEntry(_assetTypesCacheKey) as List<AssetType>;
+        var assetTypes = _cacheService.GetCacheEntry(_assetTypesCacheKey) as List<AssetTypeDto>;
 
         if (assetTypes is not null)
             return assetTypes;
@@ -291,12 +287,12 @@ public class DbRepository(ILogger<DbRepository> logger, StratosphereContext dbCo
         return records ?? [];
     }
 
-    public async Task<AssetType?> GetAssetTypeByName(string? name)
+    public async Task<AssetTypeDto?> GetAssetTypeByName(string? name)
     {
         if (string.IsNullOrEmpty(name))
             return null;
 
-        var assetTypes = _cacheService.GetCacheEntry(_assetTypesCacheKey) as List<AssetType>;
+        var assetTypes = _cacheService.GetCacheEntry(_assetTypesCacheKey) as List<AssetTypeDto>;
 
         if (assetTypes is not null)
             return assetTypes.FirstOrDefault(x => x.Name == name);
@@ -306,7 +302,7 @@ public class DbRepository(ILogger<DbRepository> logger, StratosphereContext dbCo
         return record;
     }
 
-    public async Task<int> CreateAssetType(AssetType? assetType)
+    public async Task<int> CreateAssetType(AssetTypeDto? assetType)
     {
         if (assetType is null)
             return 0;
@@ -359,9 +355,9 @@ public class DbRepository(ILogger<DbRepository> logger, StratosphereContext dbCo
         return records;
     }
 
-    public async Task<List<ConnectionProfile>?> GetAllConnectionProfiles()
+    public async Task<List<ConnectionProfileDto>?> GetAllConnectionProfiles()
     {
-        var connectionProfiles = _cacheService.GetCacheEntry(_connectionProfilesCacheKey) as List<ConnectionProfile>;
+        var connectionProfiles = _cacheService.GetCacheEntry(_connectionProfilesCacheKey) as List<ConnectionProfileDto>;
 
         if (connectionProfiles is not null)
             return connectionProfiles;
@@ -375,12 +371,12 @@ public class DbRepository(ILogger<DbRepository> logger, StratosphereContext dbCo
         return records ?? [];
     }
 
-    public async Task<ConnectionProfile?> GetConnectionProfileByName(string? name)
+    public async Task<ConnectionProfileDto?> GetConnectionProfileByName(string? name)
     {
         if (string.IsNullOrEmpty(name))
             return null;
 
-        var connectionProfiles = _cacheService.GetCacheEntry(_connectionProfilesCacheKey) as List<ConnectionProfile>;
+        var connectionProfiles = _cacheService.GetCacheEntry(_connectionProfilesCacheKey) as List<ConnectionProfileDto>;
 
         if (connectionProfiles is not null)
             return connectionProfiles.FirstOrDefault(x => x.Name == name);
@@ -390,7 +386,7 @@ public class DbRepository(ILogger<DbRepository> logger, StratosphereContext dbCo
         return record;
     }
 
-    public async Task<int> CreateConnectionProfile(ConnectionProfile? connectionProfile)
+    public async Task<int> CreateConnectionProfile(ConnectionProfileDto? connectionProfile)
     {
         if (connectionProfile is null)
             return 0;

@@ -48,7 +48,7 @@ public class ServiceTypeService(ILogger<ServiceTypeService> logger, IDbRepositor
 
     public async Task<int> CreateServiceType(ServiceTypeVM serviceType)
     {
-        var dbVal = new ServiceType()
+        var dbVal = new ServiceTypeDto()
         {
             ServiceTypeId = Guid.NewGuid(),
             Name = serviceType.Name
@@ -57,7 +57,7 @@ public class ServiceTypeService(ILogger<ServiceTypeService> logger, IDbRepositor
         return await _dbRepository.CreateServiceType(dbVal);
     }
 
-    private static List<ServiceTypeVM> MapServiceTypesToViewModels(List<ServiceType> serviceTypeList)
+    private static List<ServiceTypeVM> MapServiceTypesToViewModels(List<ServiceTypeDto> serviceTypeList)
     {
         return serviceTypeList.Select(x => new ServiceTypeVM
         {
@@ -66,7 +66,7 @@ public class ServiceTypeService(ILogger<ServiceTypeService> logger, IDbRepositor
         }).ToList();
     }
 
-    private static ServiceTypeVM? MapServiceTypesToViewModels(ServiceType? serviceType)
+    private static ServiceTypeVM? MapServiceTypesToViewModels(ServiceTypeDto? serviceType)
     {
         if (serviceType is null)
             return null;

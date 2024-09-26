@@ -51,7 +51,7 @@ public class ServicesService(ILogger<ServicesService> logger, IDbRepository dbRe
 
         var serviceType = await _dbRepository.GetServiceTypeByName(service.Type);
 
-        var dbVal = new Service()
+        var dbVal = new ServiceDto()
         {
             ServiceId = Guid.NewGuid(),
             Name = service.Name,
@@ -63,7 +63,7 @@ public class ServicesService(ILogger<ServicesService> logger, IDbRepository dbRe
         return await _dbRepository.CreateService(dbVal);
     }
 
-    private static List<ServiceVM>? MapServicesToViewModels(List<Service>? services)
+    private static List<ServiceVM>? MapServicesToViewModels(List<ServiceDto>? services)
     {
         if (services is null || services.Count == 0)
             return null;

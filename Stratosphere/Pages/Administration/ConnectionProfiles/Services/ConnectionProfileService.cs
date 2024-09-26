@@ -21,7 +21,7 @@ public class ConnectionProfileService(ILogger<ConnectionProfileService> logger, 
         return retVal;
     }
 
-    private static List<ConnectionProfileVM>? ConvertToConnectionProfileVM(List<ConnectionProfile>? connectionProfiles)
+    private static List<ConnectionProfileVM>? ConvertToConnectionProfileVM(List<ConnectionProfileDto>? connectionProfiles)
     {
         if (connectionProfiles is null || connectionProfiles.Count == 0)
             return null;
@@ -41,7 +41,7 @@ public class ConnectionProfileService(ILogger<ConnectionProfileService> logger, 
         return retVal;
     }
 
-    private static ConnectionProfileVM? ConvertToConnectionProfileVM(ConnectionProfile? connectionProfile)
+    private static ConnectionProfileVM? ConvertToConnectionProfileVM(ConnectionProfileDto? connectionProfile)
     {
         if (connectionProfile is null)
             return null;
@@ -71,7 +71,7 @@ public class ConnectionProfileService(ILogger<ConnectionProfileService> logger, 
         if (connectionProfile is null)
             return 0;
 
-        var dbVal = new ConnectionProfile()
+        var dbVal = new ConnectionProfileDto()
         {
             ConnectionProfileId = Guid.NewGuid(),
             Name = connectionProfile.Name,
