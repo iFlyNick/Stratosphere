@@ -10,7 +10,7 @@ public class StratosphereMiddleware(ILogger<StratosphereMiddleware> logger, Requ
 
     public async Task Invoke(HttpContext context)
     {
-        if (context.User is not null && (context.User.Identity?.IsAuthenticated ?? false))
+        if (context.User.Identity?.IsAuthenticated ?? false)
             await _identityService.AddUserClaims(context.User, context.RequestAborted);
 
         await _next(context);
